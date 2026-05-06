@@ -27,3 +27,6 @@ Logs/
 
 # Windows
 Thumbs.db
+
+#other
+*.txt

@@ -10,11 +10,11 @@ obj/
 *.dll
 *.exe
 
-# Settings (ОПЦИОНАЛЬНО: если хочешь хранить настройки локально)
+# Settings
 # settings.json
 # setting.json
 
-# Logs (ОПЦИОНАЛЬНО: если не хочешь загружать логи)
+# Logs
 *.log
 Logs/
 

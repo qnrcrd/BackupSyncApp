@@ -1,0 +1,29 @@
+﻿# Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+
+# Build outputs
+bin/
+obj/
+*.dll
+*.exe
+
+# Settings (ОПЦИОНАЛЬНО: если хочешь хранить настройки локально)
+# settings.json
+# setting.json
+
+# Logs (ОПЦИОНАЛЬНО: если не хочешь загружать логи)
+*.log
+Logs/
+
+# User-specific files
+*.userosscache
+*.sln.docstates
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db

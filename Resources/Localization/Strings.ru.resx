@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppTitle" xml:space="preserve">
+    <value>Приложение резервного копирования</value>
+  </data>
+  <data name="AutoBack_Check" xml:space="preserve">
+    <value>Включить авто-копирование</value>
+  </data>
+  <data name="Btn_AddFolder" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="Btn_ChooseDisk" xml:space="preserve">
+    <value>Выбрать диск</value>
+  </data>
+  <data name="Btn_clearLog" xml:space="preserve">
+    <value>Очистить журнал операций</value>
+  </data>
+  <data name="Btn_ConfigAB" xml:space="preserve">
+    <value>Настроить...</value>
+  </data>
+  <data name="Btn_ManualBack" xml:space="preserve">
+    <value>Начать резервное копирование</value>
+  </data>
+  <data name="Btn_RemoveFolder" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="Btn_resetSettings" xml:space="preserve">
+    <value>Сбросить настройки</value>
+  </data>
+  <data name="Btn_saveLog" xml:space="preserve">
+    <value>Сохранить журнал операций</value>
+  </data>
+  <data name="Msg_ConfirmRemove" xml:space="preserve">
+    <value>Удалить папку '{0}' из списка?</value>
+  </data>
+  <data name="Msg_ConfirmRemoveTitle" xml:space="preserve">
+    <value>Подтверждение удаления папки</value>
+  </data>
+  <data name="Msg_LanguageChanged" xml:space="preserve">
+    <value>Язык будет изменен после перезапуска приложения</value>
+  </data>
+  <data name="Msg_LanguageChangedTitle" xml:space="preserve">
+    <value>Смена языка</value>
+  </data>
+  <data name="Msg_NoFolders" xml:space="preserve">
+    <value>Нет папок для удаления</value>
+  </data>
+  <data name="Msg_InfromationTitle" xml:space="preserve">
+    <value>Информация</value>
+  </data>
+  <data name="Txt_BackupHere" xml:space="preserve">
+    <value>Резервная копия будет сохранена на этом диске</value>
+  </data>
+  <data name="Txt_Current_dsk" xml:space="preserve">
+    <value>Запомненный диск:</value>
+  </data>
+  <data name="Msg_AlreadyAdded" xml:space="preserve">
+    <value>Эта папка уже добавлена</value>
+  </data>
+  <data name="Msg_WarningTitle" xml:space="preserve">
+    <value>Предупреждение</value>
+  </data>
+  <data name="Msg_ErrorTitle" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="Msg_Yes" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="Msg_No" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="Msg_SelectFolder" xml:space="preserve">
+    <value>Выберите папку для резервного копирования</value>
+  </data>
+  <data name="Msg_SelectDisk" xml:space="preserve">
+    <value>Выберите диск для резервного копирования</value>
+  </data>
+  <data name="Msg_SelectUsb" xml:space="preserve">
+    <value>Выберите USB диск для авто-копирования</value>
+  </data>
+  <data name="Msg_Error" xml:space="preserve">
+    <value>Ошибка: {0}</value>
+  </data>
+  <data name="Dialog_ChooseDisk" xml:space="preserve">
+    <value>Выберите место хранения копии</value>
+  </data>
+  <data name="Dialog_ChooseUSB" xml:space="preserve">
+    <value>Выберите внешний целевой носитель</value>
+  </data>
+  <data name="Msg_DriveNotReady" xml:space="preserve">
+    <value>Выбранный носитель не готов к работе</value>
+  </data>
+  <data name="Msg_DiskConfigured" xml:space="preserve">
+    <value>Носитель настроен для автоматического копирования.
+Путь: {0}
+Имя: {1}
+Тип: {2}
+При повторном подключении диска копирование начнется автоматически</value>
+  </data>
+  <data name="Msg_DiskConfiguredTitle" xml:space="preserve">
+    <value>Настройка носителя</value>
+  </data>
+  <data name="Msg_InvalidDiskType" xml:space="preserve">
+    <value>Пожалуйста выберите USB или другой внешний носитель. 
+Текущий носитель имеет тип {0}</value>
+  </data>
+  <data name="Msg_InvalidDiskTypeTitle" xml:space="preserve">
+    <value>Неподходящий тип диска</value>
+  </data>
+  <data name="Msg_ResetSettings" xml:space="preserve">
+    <value>Вы уверены что хотите сбросить настройки? Это действие сбросит:
+- Список источников копирования
+- Настройки автоматического копирования
+ - Выбор целевых носителей</value>
+  </data>
+  <data name="Msg_ResetSettingsTitle" xml:space="preserve">
+    <value>Сброс настроек</value>
+  </data>
+  <data name="Msg_SettingsReseted" xml:space="preserve">
+    <value>Настройки сброшены.
+Рекомендуем перезапустить приложение для лучшего эффекта.</value>
+  </data>
+  <data name="Txt_Copying" xml:space="preserve">
+    <value>Копирование... {0}%</value>
+  </data>
+  <data name="Txt_Status_Ready" xml:space="preserve">
+    <value>Готово</value>
+  </data>
+  <data name="Txt_Status_NotTargetDisk" xml:space="preserve">
+    <value>(не целевой диск)</value>
+  </data>
+  <data name="Txt_Status_DriveCopying" xml:space="preserve">
+    <value>(идет копирование...)</value>
+  </data>
+  <data name="Txt_Status_Inactive" xml:space="preserve">
+    <value>(не активен)</value>
+  </data>
+  <data name="Txt_TargetPathChosen" xml:space="preserve">
+    <value>выбрано: {0}</value>
+  </data>
+  <data name="Txt_DiskNotChosen" xml:space="preserve">
+    <value>диск не выбран</value>
+  </data>
+  <data name="Txt_Status_Error" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="Txt_Status_Waiting" xml:space="preserve">
+    <value>(ожидание диска...)</value>
+  </data>
+  <data name="Nav_header" xml:space="preserve">
+    <value>Навигация</value>
+  </data>
+  <data name="Nav_manualBack" xml:space="preserve">
+    <value>📁 Ручное копирование</value>
+  </data>
+  <data name="Nav_autoBack" xml:space="preserve">
+    <value>⚡Автокопирование</value>
+  </data>
+  <data name="Nav_Log" xml:space="preserve">
+    <value>📋 Журнал операций</value>
+  </data>
+  <data name="Header_SourceFolderPanel" xml:space="preserve">
+    <value>Источники</value>
+  </data>
+  <data name="Header_ManualBackup" xml:space="preserve">
+    <value>Ручное копирование</value>
+  </data>
+  <data name="Header_AutoBackup" xml:space="preserve">
+    <value>Автоматическое копирование</value>
+  </data>
+  <data name="Header_Log" xml:space="preserve">
+    <value>Журнал операций</value>
+  </data>
+  <data name="Header_AutoBackupDetails" xml:space="preserve">
+    <value>Подробности</value>
+  </data>
+  <data name="Txt_LastOpsTime" xml:space="preserve">
+    <value>Время последней операции: </value>
+  </data>
+  <data name="Dialog_ChooseSourceFolder" xml:space="preserve">
+    <value>Выберите источники копирования</value>
+  </data>
+  <data name="Txt_TypeUnknown" xml:space="preserve">
+    <value>Неизвестный тип</value>
+  </data>
+  <data name="Txt_TypeRemovable" xml:space="preserve">
+    <value>USB диск</value>
+  </data>
+  <data name="Txt_TypeFixed" xml:space="preserve">
+    <value>Внутренний диск</value>
+  </data>
+  <data name="Txt_TypeCD" xml:space="preserve">
+    <value>CD / DVD диск</value>
+  </data>
+  <data name="Txt_TypeRAM" xml:space="preserve">
+    <value>RAM диск</value>
+  </data>
+  <data name="Txt_TypeNetwork" xml:space="preserve">
+    <value>Сетевой диск</value>
+  </data>
+  <data name="Chk_ArchiveFiles" xml:space="preserve">
+    <value>Архивировать файлы (ZIP)</value>
+  </data>
+  <data name="Txt_CompressionMode" xml:space="preserve">
+    <value>Режим:</value>
+  </data>
+  <data name="CompressionMode_Fast" xml:space="preserve">
+    <value>⚡ Быстрый</value>
+  </data>
+  <data name="CompressionMode_Balanced" xml:space="preserve">
+    <value>⚖️ Баланс</value>
+  </data>
+  <data name="CompressionMode_Maximum" xml:space="preserve">
+    <value>📦 Максимальный</value>
+  </data>
+  <data name="Header_ArchiveSettings" xml:space="preserve">
+    <value>Архивация</value>
+  </data>
+  <data name="Nav_Settings" xml:space="preserve">
+    <value>⚙️ Настройки</value>
+  </data>
+  <data name="Header_Settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="Header_ResetSettings" xml:space="preserve">
+    <value>Сброс настроек</value>
+  </data>
+  <data name="Hint_CompressionMode" xml:space="preserve">
+    <value>Быстро = меньше сжатие, Максимально = меньше размер</value>
+  </data>
+  <data name="Hint_LanguageSettings" xml:space="preserve">
+    <value> Смена языка требует перезапуска</value>
+  </data>
+  <data name="Header_LanguageSettings" xml:space="preserve">
+    <value>Language/Язык</value>
+  </data>
+  <data name="Txt_ArchPasswrd" xml:space="preserve">
+    <value>🔒 Пароль на архив:</value>
+  </data>
+  <data name="Txt_PasswordSet" xml:space="preserve">
+    <value>Пароль установлен</value>
+  </data>
+  <data name="Txt_NoPassword" xml:space="preserve">
+    <value>Нет пароля</value>
+  </data>
+  <data name="Txt_Ready" xml:space="preserve">
+    <value>Готово</value>
+  </data>
+  <data name="Txt_Archiving" xml:space="preserve">
+    <value>Архивирование...</value>
+  </data>
+  <data name="Error_NoPathChosen" xml:space="preserve">
+    <value>Не указана конечная папка!</value>
+  </data>
+  <data name="Error_NoSourceGiven" xml:space="preserve">
+    <value>Источники отсутствуют!</value>
+  </data>
+  <data name="Error_ArchiveFailed" xml:space="preserve">
+    <value>Ошибка создания архива: {0}</value>
+  </data>
+  <data name="Txt_AutoBackupFullPath" xml:space="preserve">
+    <value>Сохраненный путь:</value>
+  </data>
+  <data name="TrayMenu_Open" xml:space="preserve">
+    <value>Открыть</value>
+  </data>
+  <data name="TrayMenu_Exit" xml:space="preserve">
+    <value>Выход</value>
+  </data>
+  <data name="TrayNotification_BackupComplete" xml:space="preserve">
+    <value>Копия успешно создана!</value>
+  </data>
+  <data name="TrayNotification_BackupError" xml:space="preserve">
+    <value>Ошибка копирования</value>
+  </data>
+  <data name="TrayNotification_AutoBackupComplete" xml:space="preserve">
+    <value>Авто-бэкап завершен!</value>
+  </data>
+  <data name="TrayNotification_FilesCopied" xml:space="preserve">
+    <value>Файлов скопировано: </value>
+  </data>
+  <data name="TrayNotification_Title" xml:space="preserve">
+    <value>Копирование</value>
+  </data>
+</root>

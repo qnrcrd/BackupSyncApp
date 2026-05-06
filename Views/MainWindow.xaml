@@ -1,0 +1,649 @@
+﻿ <Window x:Class="BackupSyncApp.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BackupSyncApp.Views"
+        xmlns:common="clr-namespace:BackupSyncApp.Common"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        Title="{common:Localize AppTitle}" Height="800" Width="1100"
+        WindowStartupLocation="CenterScreen"
+        Background="#F5F7FA"
+         ShowInTaskbar="True"
+         Icon="/icon.ico">
+
+    <Window.Resources>
+
+        <common:CompressionModeToStringConverter x:Key="CompressionModeConverter"/> 
+        <common:LanguageToColorConverter x:Key="LanguageToColorConverter"/>
+        <common:BoolToPasswordStatusConverter x:Key="BoolToPasswordStatusConverter"/>
+        <common:ProgressToVisibilityConverter x:Key="ProgressToVisibilityConverter"/>
+        <!-- status text color converter -->
+        <local:StatusColorConverter x:Key="StatusColorConverter"/>
+        
+        <!-- active button highlight converter -->
+        <local:ModeToSelectedConverter x:Key="ModeToSelectedConverter"/>
+
+        <!-- 'modern' button style -->
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="4"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1976D2"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#0D47A1"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#BDBDBD"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DangerButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Background" Value="#BD0F0F"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#941212"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#732525"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Style for nav buttons -->
+        <Style x:Key="NavButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#757575"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="15,12"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderThickness="0,0,3,0"
+                                BorderBrush="{TemplateBinding BorderBrush}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="Center"
+                                            Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E3F2FD"/>
+                    <Setter Property="Foreground" Value="#1976D2"/>
+                </Trigger>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="Selected">
+                    <Setter Property="Background" Value="#E3F2FD"/>
+                    <Setter Property="Foreground" Value="#2196F3"/>
+                    <Setter Property="BorderBrush" Value="#2196F3"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- GroupBoxes style -->
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="0,0,0,15"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GroupBox">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0"
+                                    Background="#2196F3"
+                                    Padding="15,8"
+                                    CornerRadius="4,4,0,0">
+                                <TextBlock Text="{TemplateBinding Header}"
+                                         Foreground="White"
+                                         FontWeight="SemiBold"
+                                         FontSize="14"
+                                         TextTrimming="CharacterEllipsis"/>
+                            </Border>
+                            <Border Grid.Row="1"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="1,0,1,1"
+                                    CornerRadius="0,0,4,4"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- left nav panel -->
+        <Border Grid.Column="0" Background="White" BorderBrush="#E0E0E0" BorderThickness="0,0,1,0">
+            <Grid Margin="0,20,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- nav header -->
+                <TextBlock Grid.Row="0"
+                           Text="{common:Localize Nav_header}"
+                           Foreground="#9E9E9E"
+                           FontSize="12"
+                           FontWeight="Bold"
+                           Margin="15,0,0,10"/>
+
+                <!-- nav buttons -->
+                <StackPanel Grid.Row="1" Margin="0">
+                    <Button Content="{common:Localize Nav_manualBack}"
+                            Style="{StaticResource NavButtonStyle}"
+                                Tag="{Binding SelectedMode, Converter={StaticResource ModeToSelectedConverter}, ConverterParameter=Manual}"
+                            Command="{Binding SwitchToManualModeCommand}"/>
+
+                    <Button Content="{common:Localize Nav_autoBack}"
+                            Style="{StaticResource NavButtonStyle}"
+                            Tag="{Binding SelectedMode, Converter={StaticResource ModeToSelectedConverter}, ConverterParameter=Auto}"
+                            Command="{Binding SwitchToAutoModeCommand}"/>
+
+                    <Button Content="{common:Localize Nav_Settings}"
+                            Style="{StaticResource NavButtonStyle}"
+                            Tag="{Binding SelectedMode, Converter={StaticResource ModeToSelectedConverter}, ConverterParameter=Settings}"
+                            Command="{Binding SwitchToSettingsModeCommand}"/>
+
+                    <Button Content="{common:Localize Nav_Log}"
+                            Style="{StaticResource NavButtonStyle}"
+                            Tag="{Binding SelectedMode, Converter={StaticResource ModeToSelectedConverter}, ConverterParameter=Log}"
+                            Command="{Binding SwitchToLogModeCommand}"/>
+                </StackPanel>
+
+                <!-- divider -->
+                <Rectangle Grid.Row="2"
+                           Height="1"
+                           Fill="#E0E0E0"
+                           Margin="15,20,15,10"/>
+
+
+                <!-- Disk info (always visible) -->
+                <StackPanel Grid.Row="3" Margin="15,0,15,20" VerticalAlignment="Bottom">
+                    <TextBlock Text="{common:Localize Txt_Current_dsk}"
+                               Foreground="#9E9E9E"
+                               FontSize="11"
+                               FontWeight="Bold"
+                               Margin="0,0,0,10"/>
+
+                    <Border Background="#F5F5F5"
+                            CornerRadius="4"
+                            Padding="10">
+                        <StackPanel>
+                            <TextBlock Text="{Binding CurrentDriveText}"
+                                       FontWeight="Bold"
+                                       Foreground="#2196F3"
+                                       FontSize="13"/>
+                            <TextBlock Text="{Binding DriveStatusText}"
+                                       Foreground="{Binding DriveStatusColor}"
+                                       FontSize="12"
+                                       Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Right content panel -->
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" Padding="20" Margin="10,0,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!-- Source folders | ALWAYS VISIBLE -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Content depending on active mode -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Status Bar -->
+                </Grid.RowDefinitions>
+
+                <!-- 1. Source Folders Panel | ALWAYS VISIBLE -->
+                <GroupBox Grid.Row="0" Header="{common:Localize Header_SourceFolderPanel}" Margin="0,0,0,20">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                            <Button Content="{common:Localize Btn_AddFolder}"
+                                    Style="{StaticResource ModernButton}"
+                                    Command="{Binding AddFolderCommand}" Width="92"/>
+
+                            <Button Content="{common:Localize Btn_RemoveFolder}"
+                                    Margin="10,0,0,0"
+                                    Style="{StaticResource ModernButton}"
+                                    Command="{Binding RemoveFolderCommand}"/>
+
+                            
+                        </StackPanel>
+
+                        <ListBox x:Name="SourceFoldersListBox"
+                                 ItemsSource="{Binding SourceFolders}"
+                                 SelectedItem="{Binding SelectedFolder, Mode=TwoWay}"
+                                 Height="120"
+                                 BorderBrush="#E0E0E0"
+                                 Background="White">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}"
+                                               TextTrimming="CharacterEllipsis"
+                                               Padding="8,5"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 2. content depending on active mode -->
+                <Grid Grid.Row="1" Margin="0,0,0,20">
+                    <!-- Manual Backup mode -->
+                    <StackPanel Visibility="{Binding IsManualModeVisible}">
+                        <GroupBox Header="{common:Localize Header_ManualBackup}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                                    <Button Content="{common:Localize Btn_ChooseDisk}"
+                                            Width="150"
+                                            Style="{StaticResource ModernButton}"
+                                            Command="{Binding SelectTargetCommand}"/>
+
+                                    <Border Background="#F5F5F5"
+                                            CornerRadius="4"
+                                            Padding="15,8"
+                                            Margin="10,0,0,0">
+                                        <TextBlock Text="{Binding TargetPathText}" 
+                                                 VerticalAlignment="Center"
+                                                 FontWeight="SemiBold"
+                                                 Foreground="#2196F3"/>
+                                    </Border>
+                                </StackPanel>
+                                
+                                <!-- archivation -->
+                                <CheckBox Content="{common:Localize Chk_ArchiveFiles}"
+                                          VerticalAlignment="Center"
+                                          IsChecked="{Binding EnableCompression}"
+                                          FontSize="13"
+                                          Margin="0,0,0,15"/>
+
+                                <TextBlock Text="{common:Localize Txt_BackupHere}"
+                                         Foreground="#757575"
+                                         FontStyle="Italic"
+                                         Margin="0,0,0,15"/>
+
+                                <Button Content="{common:Localize Btn_ManualBack}"
+                                        Width="250"
+                                        Height="45"
+                                        HorizontalAlignment="Left"
+                                        Style="{StaticResource ModernButton}"
+                                        FontSize="14"
+                                        FontWeight="Bold"
+                                        Command="{Binding StartBackupCommand}"/>
+
+                                <!-- ======= STATUS BAR ======= -->
+                                <Border Background="#E3F2FD"
+                                        CornerRadius="4"
+                                        Padding="15"
+                                        Margin="0,15,0,0"
+                                        Visibility="{Binding ProgressValue, Converter={StaticResource ProgressToVisibilityConverter}}">
+                                    <StackPanel>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0"
+                                                    Text="{Binding StatusText}"
+                                                    FontWeight="SemiBold"
+                                                    Foreground="#1976D2"
+                                                    VerticalAlignment="Center"/>
+
+                                            <TextBlock Grid.Column="1"
+                                                    Text="{Binding ProgressValue, StringFormat={}{0}%}"
+                                                    FontWeight="Bold"
+                                                    Foreground="#1976D2"
+                                                    VerticalAlignment="Center"/>
+                                        </Grid>
+
+                                        <ProgressBar Value="{Binding ProgressValue}"
+                                                    Minimum="0"
+                                                    Maximum="100"
+                                                    Height="8"
+                                                    Margin="0,10,0,0"
+                                                    BorderThickness="0"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- ======= ======= -->
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+
+                    <!-- Auto Backup mode -->
+                    <StackPanel Visibility="{Binding IsAutoModeVisible}">
+                        <GroupBox Header="{common:Localize Header_AutoBackup}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                                    <CheckBox Content="{common:Localize AutoBack_Check}"
+                                              VerticalAlignment="Center"
+                                              IsChecked="{Binding IsAutoBackupEnabled}"
+                                              FontSize="13"/>
+
+                                    <Button Content="{common:Localize Btn_ConfigAB}"
+                                            Width="Auto"
+                                            Height="Auto"
+                                            Margin="15,0,0,0"
+                                            Style="{StaticResource ModernButton}"
+                                            
+                                            Command="{Binding ConfigureAutoBackupCommand}"/>
+                                </StackPanel>
+
+                                <!-- ===== ARCHIVATION ===== -->
+                                <CheckBox Content="{common:Localize Chk_ArchiveFiles}"
+                                              VerticalAlignment="Center"
+                                              IsChecked="{Binding EnableCompression}"
+                                              FontSize="13"/>
+                                <!-- ===== ========== ===== -->
+
+                                <!-- =========== DETAILS =========== -->
+                                <Border Background="#F8F9FA"
+                                        CornerRadius="4"
+                                        Padding="15">
+                                    <StackPanel>
+                                        <TextBlock Text="{common:Localize Header_AutoBackupDetails}"
+                                                 FontSize="11"
+                                                 Foreground="#9E9E9E"
+                                                 FontWeight="Bold"
+                                                 Margin="0,0,0,10"/>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Grid.Row="0" Grid.Column="0" 
+                                                     Text="{common:Localize Txt_AutoBackupFullPath}" 
+                                                     Foreground="#757575"
+                                                     Margin="0,0,0,8"/>
+                                            <TextBlock Grid.Row="0" Grid.Column="1" 
+                                                     Text="{Binding AutoBackupFullPath}"
+                                                     Foreground="#2196F3"
+                                                     FontWeight="SemiBold"/>
+
+                                            <TextBlock Grid.Row="1" Grid.Column="0" 
+                                                     Text="{common:Localize Txt_LastOpsTime}" 
+                                                     Foreground="#757575"/>
+                                            <TextBlock Grid.Row="1" Grid.Column="1" 
+                                                     Text="{Binding LastBackupTime}"
+                                                     FontWeight="SemiBold"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+                                <!-- ====================== -->
+
+                                <!-- ======= STATUS BAR ======= -->
+                                <Border Background="#E3F2FD"
+                                        CornerRadius="4"
+                                        Padding="15"
+                                        Margin="0,15,0,0"
+                                        Visibility="{Binding ProgressValue, Converter={StaticResource ProgressToVisibilityConverter}}">
+                                    <StackPanel>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{Binding StatusText}"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="#1976D2"
+                                                       VerticalAlignment="Center"/>
+
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{Binding ProgressValue, StringFormat={}{0}%}"
+                                                       FontWeight="Bold"
+                                                       Foreground="#1976D2"
+                                                       VerticalAlignment="Center"/>
+                                        </Grid>
+
+                                        <ProgressBar Value="{Binding ProgressValue}"
+                                                     Minimum="0"
+                                                     Maximum="100"
+                                                     Height="8"
+                                                     Margin="0,10,0,0"
+                                                     BorderThickness="0"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- ======= ======= -->
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                    
+                    <!-- Settings mode -->
+                    <StackPanel Visibility="{Binding IsSettingsModeVisible}">
+                        <GroupBox Header="{common:Localize Header_Settings}">
+                            <StackPanel Margin="10">
+
+                                <!-- ARCHIVATION -->
+                                <TextBlock Text="{common:Localize Header_ArchiveSettings}"
+                                           FontSize="11"
+                                           Foreground="#9E9E9E"
+                                           FontWeight="Bold"
+                                           Margin="0,0,0,10"/>
+
+                                <Border Background="#F8F9FA" CornerRadius="4" Padding="15" Margin="0,0,0,20">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{common:Localize Txt_CompressionMode}"
+                                                       VerticalAlignment="Center"
+                                                       Margin="0,0,10,0"
+                                                       Foreground="#757575"/>
+
+                                            <ComboBox ItemsSource="{Binding CompressModes}"
+                                                      SelectedItem="{Binding SelectedCompressMode}"
+                                                      Width="150"
+                                                      IsEnabled="{Binding EnableCompression}">
+                                                <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Converter={StaticResource CompressionModeConverter}}"/>
+                                                </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox> 
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                            <TextBlock Text="{common:Localize Txt_ArchPasswrd}"
+                                                       VerticalAlignment="Center"
+                                                       Margin="0,0,10,0"
+                                                       Foreground="#757575"/>
+
+                                            <PasswordBox x:Name="PasswordBox"
+                                                         Width="200"
+                                                         Height="25"
+                                                         VerticalAlignment="Center"
+                                                         PasswordChanged="PasswordBox_PasswordChanged"/>
+
+                                            <TextBlock Text="{Binding HasArchivePassword, Converter={StaticResource BoolToPasswordStatusConverter}}"
+                                                       VerticalAlignment="Center"
+                                                       Margin="10,0,0,0"
+                                                       Foreground="#4CAF50"
+                                                       FontWeight="Bold"/>
+                                        </StackPanel>
+
+                                        <TextBlock Text="{common:Localize Hint_CompressionMode}"
+                                                   FontSize="11"
+                                                   Foreground="#9E9E9E"
+                                                   Margin="0,8,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- ============== -->
+                                
+                                <!-- Language -->
+                                <TextBlock Text="{common:Localize Header_LanguageSettings}"
+                                           FontSize="11"
+                                           Foreground="#9E9E9E"
+                                           FontWeight="Bold"
+                                           Margin="0,0,10,0"/>
+
+                                <Border Background="#F8F9FA" CornerRadius="4" Padding="15" Margin="0,0,0,20">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="EN"
+                                                Style="{StaticResource ModernButton}"
+                                                Background="{Binding SelectedLanguage, Converter={StaticResource LanguageToColorConverter}}"
+                                                Command="{Binding SwitchToEnglishCommand}"
+                                                Width="60"
+                                                Margin="0,0,10,0"/>
+                                        <Button Content="RU"
+                                                Style="{StaticResource ModernButton}"
+                                                Background="{Binding SelectedLanguage, Converter={StaticResource LanguageToColorConverter}}"
+                                                Command="{Binding SwitchToRussianCommand}"
+                                                Width="60"/>
+
+                                        <TextBlock Text="{common:Localize Hint_LanguageSettings}"
+                                                   FontSize="11"
+                                                   Foreground="#9E9E9E"
+                                                   Margin="0,8,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- =========== -->
+                                
+                                <!-- RESET SETTINGS -->
+                                <TextBlock Text="{common:Localize Header_ResetSettings}"
+                                           FontSize="11"
+                                           Foreground="#9E9E9E"
+                                           FontWeight="Bold"
+                                           Margin="0,0,0,10"/>
+
+                                <Border Background="#FFF3F3" CornerRadius="4" Padding="15">
+                                    <StackPanel>
+                                        <Button Content="{common:Localize Btn_resetSettings}"
+                                                Style="{StaticResource DangerButtonStyle}"
+                                                Command="{Binding ResetSettingsCommand}"
+                                                HorizontalAlignment="Left"
+                                                Width="200"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- ============= -->
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+
+                    <!-- Operations Log mode -->
+                    <StackPanel Visibility="{Binding IsLogModeVisible}">
+                        <GroupBox Header="{common:Localize Header_Log}">
+                            <DockPanel>
+                                <StackPanel DockPanel.Dock="Top" 
+                                          Orientation="Horizontal" 
+                                          HorizontalAlignment="Right"
+                                          Margin="0,0,0,10">
+                                    <Button x:Name="ClearLogButton"
+                                            Content="{common:Localize Btn_clearLog}"
+                                            Margin="0,0,5,0"
+                                            Style="{StaticResource ModernButton}"
+                                            
+                                            Command="{Binding ClearLogCommand}"
+                                            ToolTip="Clear all log entries"/>
+
+                                    <Button x:Name="SaveLogButton"
+                                            Content="{common:Localize Btn_saveLog}"
+                                            Style="{StaticResource ModernButton}"
+                                            
+                                            Command="{Binding SaveLogCommand}"
+                                            ToolTip="Save log to file"/>
+                                </StackPanel>
+
+                                <ListBox ItemsSource="{Binding LogEntries}"
+                                         Background="#F8F9FA"
+                                         BorderThickness="1"
+                                         BorderBrush="#E0E0E0"
+                                         FontFamily="Consolas"
+                                         FontSize="12"
+                                         Height="300">
+
+                                    <i:Interaction.Behaviors>
+                                        <common:AutoScrollBehavior/>
+                                    </i:Interaction.Behaviors>
+
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}"
+                                                     TextWrapping="Wrap"
+                                                     FontFamily="Consolas"
+                                                     FontSize="12"
+                                                     Padding="8,4">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Type}" Value="Error">
+                                                                <Setter Property="Foreground" Value="#F44336"/>
+                                                                <Setter Property="FontWeight" Value="Bold"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Type}" Value="Success">
+                                                                <Setter Property="Foreground" Value="#4CAF50"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Type}" Value="Warning">
+                                                                <Setter Property="Foreground" Value="#FF9800"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Type}" Value="Progress">
+                                                                <Setter Property="Foreground" Value="#2196F3"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Type}" Value="Info">
+                                                                <Setter Property="Foreground" Value="#212121"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </DockPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Window>

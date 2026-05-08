@@ -399,4 +399,22 @@
   <data name="TrayNotification_Title" xml:space="preserve">
     <value>Копирование</value>
   </data>
+  <data name="Txt_RememberedDriveHead" xml:space="preserve">
+    <value>💾 Запомненный диск</value>
+  </data>
+  <data name="Txt_CurrentVisibleDriveHead" xml:space="preserve">
+    <value>📀 Текущий диск</value>
+  </data>
+  <data name="Txt_CurrentVisibleDriveNone" xml:space="preserve">
+    <value>Отсутствует</value>
+  </data>
+  <data name="Txt_RememberedDriveNone" xml:space="preserve">
+    <value>Не настроен</value>
+  </data>
+  <data name="Txt_DiskInfo" xml:space="preserve">
+    <value>Информация о дисках</value>
+  </data>
+  <data name="Txt_Status_ReadyWaiting" xml:space="preserve">
+    <value>Автокопирование отключено</value>
+  </data>
 </root>

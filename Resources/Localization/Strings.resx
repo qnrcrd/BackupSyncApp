@@ -405,4 +405,22 @@ Application restart recommended.</value>
   <data name="TrayNotification_Title" xml:space="preserve">
     <value>Backup notification</value>
   </data>
+  <data name="Txt_RememberedDriveHead" xml:space="preserve">
+    <value>💾 Remembered drive</value>
+  </data>
+  <data name="Txt_CurrentVisibleDriveHead" xml:space="preserve">
+    <value>📀 Current drive</value>
+  </data>
+  <data name="Txt_CurrentVisibleDriveNone" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Txt_RememberedDriveNone" xml:space="preserve">
+    <value>Not configured</value>
+  </data>
+  <data name="Txt_DiskInfo" xml:space="preserve">
+    <value>Disk Info</value>
+  </data>
+  <data name="Txt_Status_ReadyWaiting" xml:space="preserve">
+    <value>Autobackup inactive</value>
+  </data>
 </root>

@@ -204,26 +204,52 @@
 
                 <!-- Disk info (always visible) -->
                 <StackPanel Grid.Row="3" Margin="15,0,15,20" VerticalAlignment="Bottom">
-                    <TextBlock Text="{common:Localize Txt_Current_dsk}"
+                    <TextBlock Text="{common:Localize Txt_DiskInfo}"
                                Foreground="#9E9E9E"
                                FontSize="11"
                                FontWeight="Bold"
                                Margin="0,0,0,10"/>
 
+                    <!-- CURRENT DRIVE -->
                     <Border Background="#F5F5F5"
                             CornerRadius="4"
-                            Padding="10">
+                            Padding="10"
+                            Margin="0,0,0,8" Height="60">
                         <StackPanel>
-                            <TextBlock Text="{Binding CurrentDriveText}"
+                            <TextBlock Text="{common:Localize Txt_CurrentVisibleDriveHead}"
                                        FontWeight="Bold"
-                                       Foreground="#2196F3"
-                                       FontSize="13"/>
-                            <TextBlock Text="{Binding DriveStatusText}"
-                                       Foreground="{Binding DriveStatusColor}"
+                                       Foreground="#1976D2"
                                        FontSize="12"
-                                       Margin="0,5,0,0"/>
+                                       Margin="0,0,0,3"/>
+                            <TextBlock Text="{Binding CurrentVisibleDrive}"
+                                       FontWeight="SemiBold"
+                                       Foreground="#1976D2"
+                                       FontSize="15"
+                                       TextTrimming="CharacterEllipsis"/>
                         </StackPanel>
                     </Border>
+                    
+                    <!-- REMEMBERED DRIVE -->
+                    <Border Background="#F5F5F5"
+                            CornerRadius="4"
+                            Padding="10" Height="83">
+                        <StackPanel>
+                            <TextBlock Text="{common:Localize Txt_RememberedDriveHead}"
+                                       Foreground="#4CAF50"
+                                       FontSize="12"
+                                       FontWeight="Bold"
+                                       Margin="0,0,0,3"/>
+                            <TextBlock Text="{Binding RememberedDriveText}"
+                                       FontWeight="SemiBold"
+                                       Foreground="#2E7D32"
+                                       FontSize="15"
+                                       TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Text="{Binding DriveStatusText}"
+                                       Foreground="{Binding DriveStatusColor}"
+                                       FontSize="12"/>
+                        </StackPanel>
+                    </Border>
+                    
                 </StackPanel>
             </Grid>
         </Border>

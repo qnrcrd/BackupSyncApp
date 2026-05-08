@@ -120,14 +120,6 @@ namespace BackupSyncApp.ViewModels
             set => SetField(ref _targetPathText, value);
         }
 
-        // current auto backup drive text
-        private string _currentDriveText = "not chosen";
-        public string CurrentDriveText
-        {
-            get => _currentDriveText;
-            set => SetField(ref _currentDriveText, value);
-        }
-
         private string _driveInfoText = "";
         public string DriveInfoText
         {
@@ -183,6 +175,20 @@ namespace BackupSyncApp.ViewModels
         {
             get => _progressValue;
             set => SetField(ref _progressValue, value);
+        }
+
+        private string _currentVisibleDrive = "none";
+        public string CurrentVisibleDrive
+        {
+            get => _currentVisibleDrive;
+            set => SetField(ref _currentVisibleDrive, value);
+        }
+
+        private string _rememberedDriveText = "not configured";
+        public string RememberedDriveText
+        {
+            get => _rememberedDriveText;
+            set => SetField(ref _rememberedDriveText, value);
         }
 
         // compression enabled
@@ -321,7 +327,7 @@ namespace BackupSyncApp.ViewModels
 
 
             InitializeEventHandlers();
-
+            StartUsbMonitoring();
             LoadSettings();
             LoadArchivePassword();
         }
@@ -354,8 +360,9 @@ namespace BackupSyncApp.ViewModels
             try
             {
                 TargetPathText = _localizationService["Txt_DiskNotChosen"];
-                CurrentDriveText = _localizationService["Txt_DiskNotChosen"];
+                CurrentVisibleDrive = _localizationService["Txt_CurrentVisibleDriveNone"];
                 DriveStatusText = _localizationService["Txt_Status_Inactive"];
+                DriveStatusColor = System.Windows.Media.Brushes.Gray;
                 StatusText = _localizationService["Txt_Ready"];
                 _enableCompression = _settings.EnableCompression;
                 _selectedCompressMode = _settings.CompressionMode;
@@ -372,18 +379,16 @@ namespace BackupSyncApp.ViewModels
 
                 if (!string.IsNullOrEmpty(_settings.TargetFolderPath))
                 {
-                    TargetPathText = L("Txt_TargetPathChosen", _settings.TargetFolderPath);
                     string driveLabel = UsbDriveWatcher.GetDriveLabel(_settings.TargetDrivePath);
-                    CurrentDriveText = $"{_settings.TargetDrivePath} ({driveLabel})";
-                    AutoBackupFullPath = _settings.TargetFolderPath;
+                    RememberedDriveText = $"{_settings.TargetDrivePath} ({driveLabel})";
+                    AutoBackupFullPath = !string.IsNullOrEmpty(_settings.TargetFolderPath) ? _settings.TargetFolderPath : _settings.TargetDrivePath;
                 }
-                else if (!string.IsNullOrEmpty(_settings.TargetDrivePath))
+                else
                 {
-                    TargetPathText = L("Txt_TargetPathChosen", _settings.TargetDrivePath);
-                    string driveLabel = UsbDriveWatcher.GetDriveLabel(_settings.TargetDrivePath);
-                    CurrentDriveText = $"{_settings.TargetDrivePath} ({driveLabel})";
-                    AutoBackupFullPath = _settings.TargetDrivePath;
+                    RememberedDriveText = _localizationService["Txt_RememberedDriveNone"];
+                    AutoBackupFullPath = " ";
                 }
+                
 
                 if (!string.IsNullOrEmpty(_manualBackupPath) && SelectedMode == "Manual")
                 {
@@ -447,9 +452,10 @@ namespace BackupSyncApp.ViewModels
         /// Обработчик изменения состояния автокопирования.
         private void OnAutoBackupEnabledChanged()
         {
-            if (IsAutoBackupEnabled) StartUsbMonitoring();
-            else StopUsbMonitoring();
             SaveSettings();
+
+            AddLog(IsAutoBackupEnabled ? "✅ Auto-backup enabled (will start when target drive connected)" :
+                "⏸️ Auto-backup disabled (drive detection still active)", LogMessageType.Info);
         }
 
         /// Запуск мониторинга USB-устройств.
@@ -539,12 +545,12 @@ namespace BackupSyncApp.ViewModels
             {
                 AddLog($"Drive connected: {drivePath}", LogMessageType.Progress);
 
-                string driveId = UsbDriveWatcher.GetDriveUniqueID(drivePath);
                 string driveLabel = UsbDriveWatcher.GetDriveLabel(drivePath);
+                CurrentVisibleDrive = $"{drivePath} ({driveLabel})";
 
-                CurrentDriveText = $"{drivePath} ({driveLabel})";
+                string driveId = UsbDriveWatcher.GetDriveUniqueID(drivePath);
 
-                if (!string.IsNullOrEmpty(_targetDriveId) && driveId == _targetDriveId)
+                if (IsAutoBackupEnabled && !string.IsNullOrEmpty(_targetDriveId) && driveId == _targetDriveId)
                 {
                     AddLog($"Target disk detected. Starting backup...", LogMessageType.Success);
                     DriveStatusText = L("Txt_Status_DriveCopying");
@@ -568,11 +574,11 @@ namespace BackupSyncApp.ViewModels
 
                     Task.Run(() => StartAutoBackup(targetFolder));
                 }
-                else
+                else if (!IsAutoBackupEnabled && driveId == _targetDriveId)
                 {
-                    DriveStatusText = L("Txt_Status_NotTargetDisk");
-                    DriveStatusColor = System.Windows.Media.Brushes.Gray;
-                }
+                    DriveStatusText = L("Txt_Status_ReadyWaiting");
+                    DriveStatusColor = System.Windows.Media.Brushes.Orange;
+                }                                
             });
         }
 
@@ -581,8 +587,13 @@ namespace BackupSyncApp.ViewModels
             UpdateUiProperty(() =>
             {
                 AddLog($"Drive disconnected: {drivePath}", LogMessageType.Info);
-                DriveStatusText = L("Txt_Status_Inactive");
-                DriveStatusColor = System.Windows.Media.Brushes.Gray;
+
+                CurrentVisibleDrive = L("Txt_CurrentVisibleDriveNone");
+                if (drivePath + "\\\\" == _settings.TargetDrivePath)
+                {
+                    DriveStatusText = L("Txt_Status_Inactive");
+                    DriveStatusColor = System.Windows.Media.Brushes.Gray;
+                }
             });
         }
         #endregion
@@ -738,8 +749,9 @@ namespace BackupSyncApp.ViewModels
                     SaveSettings();
 
                     string driveLabel = UsbDriveWatcher.GetDriveLabel(folderPath);
-                    CurrentDriveText = $"{rootPath} ({driveLabel})";
-                    TargetPathText = L("Txt_TargetPathChosen", folderPath);
+                    
+                    RememberedDriveText= $"{rootPath} ({driveLabel})";
+                    AutoBackupFullPath = folderPath;
 
                     //string driveDetails = GetDriveDetails(driveInfo);
                     //DriveInfoText = driveDetails;
@@ -819,7 +831,7 @@ namespace BackupSyncApp.ViewModels
             {
                 try
                 {
-                    string settingsFile = "setting.json";
+                    string settingsFile = "settings.json";
                     if (System.IO.File.Exists(settingsFile))
                     {
                         System.IO.File.Delete(settingsFile);
@@ -827,6 +839,7 @@ namespace BackupSyncApp.ViewModels
                     }
 
                     SourceFolders.Clear();
+                   
                     _targetDriveId = "";
                     _manualBackupPath = "";
                     AutoBackupFullPath = "";
@@ -837,15 +850,20 @@ namespace BackupSyncApp.ViewModels
 
                     // reset UI
                     TargetPathText = L("Txt_DiskNotChosen");
-                    CurrentDriveText = "not chosen";
+                    CurrentVisibleDrive = L("Txt_CurrentVisibleDriveNone");
+                    RememberedDriveText = L("Txt_RememberedDriveNone");
+                    AutoBackupFullPath = " ";
                     DriveStatusText = L("Txt_Status_Inactive");
                     DriveStatusColor = System.Windows.Media.Brushes.Gray;
 
                     // new settings
                     _settings.SourceFolders.Clear();
                     _settings.TargetDriveId = "";
-                    _settings.TargetDriveId = "";
+                    //_settings.TargetDriveId = "";
+                    _settings.TargetFolderPath = "";
+                    _settings.TargetDrivePath = "";
                     _settings.EnableAutoBackup = false;
+                    _settings.EnableCompression = false;
 
                     AddLog("All settings reset to default", LogMessageType.Success);     
                     _dialogService.ShowMessageBox("Msg_SettingsReseted", "Msg_ResetSettingsTitle", MessageBoxImage.Information);

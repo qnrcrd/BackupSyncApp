@@ -728,6 +728,33 @@ namespace BackupSyncApp.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 📀 Current drive.
+        /// </summary>
+        public static string Txt_CurrentVisibleDriveHead {
+            get {
+                return ResourceManager.GetString("Txt_CurrentVisibleDriveHead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string Txt_CurrentVisibleDriveNone {
+            get {
+                return ResourceManager.GetString("Txt_CurrentVisibleDriveNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disk Info.
+        /// </summary>
+        public static string Txt_DiskInfo {
+            get {
+                return ResourceManager.GetString("Txt_DiskInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no disk chosen.
         /// </summary>
         public static string Txt_DiskNotChosen {
@@ -773,6 +800,24 @@ namespace BackupSyncApp.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 💾 Remembered drive.
+        /// </summary>
+        public static string Txt_RememberedDriveHead {
+            get {
+                return ResourceManager.GetString("Txt_RememberedDriveHead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not configured.
+        /// </summary>
+        public static string Txt_RememberedDriveNone {
+            get {
+                return ResourceManager.GetString("Txt_RememberedDriveNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (backup in process...).
         /// </summary>
         public static string Txt_Status_DriveCopying {
@@ -814,6 +859,15 @@ namespace BackupSyncApp.Resources.Localization {
         public static string Txt_Status_Ready {
             get {
                 return ResourceManager.GetString("Txt_Status_Ready", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autobackup inactive.
+        /// </summary>
+        public static string Txt_Status_ReadyWaiting {
+            get {
+                return ResourceManager.GetString("Txt_Status_ReadyWaiting", resourceCulture);
             }
         }
         

@@ -575,6 +575,26 @@
                                 </Border>
                                 <!-- =========== -->
                                 
+                                <!-- AUTOSTART -->
+                                <TextBlock Text="{common:Localize Header_AutoStart}"
+                                           FontSize="11"
+                                           Foreground="#9E9E9E"
+                                           FontWeight="Bold"
+                                           Margin="0,0,0,10"/>
+                                <Border Background="#F8F9FA" CornerRadius="4" Padding="15" Margin="0,0,0,20">
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox Content="{common:Localize Chk_StartWithWindows}"
+                                                  VerticalAlignment="Center"
+                                                  IsChecked="{Binding StartWithWindows}"
+                                                  FontSize="13"/>
+                                        <TextBlock Text="{common:Localize Hint_AutoStart}"
+                                                   FontSize="11"
+                                                   Foreground="#9E9E9E"
+                                                   Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                                <!--==========================-->
+
                                 <!-- RESET SETTINGS -->
                                 <TextBlock Text="{common:Localize Header_ResetSettings}"
                                            FontSize="11"

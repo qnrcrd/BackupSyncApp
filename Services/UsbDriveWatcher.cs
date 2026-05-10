@@ -141,7 +141,7 @@ namespace BackupSyncApp.Services
 
                 }
 
-                return GetDriveTypeDescription(drive.DriveType);
+                //return GetDriveTypeDescription(drive.DriveType);
             }
             catch { }
             

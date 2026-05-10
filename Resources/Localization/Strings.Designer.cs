@@ -160,6 +160,15 @@ namespace BackupSyncApp.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start with Windows.
+        /// </summary>
+        public static string Chk_StartWithWindows {
+            get {
+                return ResourceManager.GetString("Chk_StartWithWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ⚖️ Balanced.
         /// </summary>
         public static string CompressionMode_Balanced {
@@ -268,6 +277,15 @@ namespace BackupSyncApp.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto-start.
+        /// </summary>
+        public static string Header_AutoStart {
+            get {
+                return ResourceManager.GetString("Header_AutoStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language/Язык.
         /// </summary>
         public static string Header_LanguageSettings {
@@ -318,6 +336,15 @@ namespace BackupSyncApp.Resources.Localization {
         public static string Header_SourceFolderPanel {
             get {
                 return ResourceManager.GetString("Header_SourceFolderPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Application will start automatically when Windows boots.
+        /// </summary>
+        public static string Hint_AutoStart {
+            get {
+                return ResourceManager.GetString("Hint_AutoStart", resourceCulture);
             }
         }
         

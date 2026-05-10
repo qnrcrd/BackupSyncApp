@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using Microsoft.Win32;
 
 namespace BackupSyncApp.ViewModels
 {
@@ -191,6 +192,20 @@ namespace BackupSyncApp.ViewModels
             set => SetField(ref _rememberedDriveText, value);
         }
 
+        private bool _startWithWindows;
+        public bool StartWithWindows
+        {
+            get => _startWithWindows;
+            set
+            {
+                if (SetField(ref _startWithWindows, value))
+                {
+                    UpdateAutoStartSetting(value);
+                    SaveSettings();
+                }
+            }
+        }
+
         // compression enabled
         private bool _enableCompression;
         public bool EnableCompression
@@ -330,6 +345,7 @@ namespace BackupSyncApp.ViewModels
             StartUsbMonitoring();
             LoadSettings();
             LoadArchivePassword();
+            LoadAutoStartSetting();
         }
 
         private void InitializeEventHandlers()
@@ -364,6 +380,7 @@ namespace BackupSyncApp.ViewModels
                 DriveStatusText = _localizationService["Txt_Status_Inactive"];
                 DriveStatusColor = System.Windows.Media.Brushes.Gray;
                 StatusText = _localizationService["Txt_Ready"];
+                StartWithWindows = _settings.StartWithWindows;
                 _enableCompression = _settings.EnableCompression;
                 _selectedCompressMode = _settings.CompressionMode;
                 _selectedLanguage = _settings.GetLanguageOrDefault();
@@ -379,7 +396,7 @@ namespace BackupSyncApp.ViewModels
 
                 if (!string.IsNullOrEmpty(_settings.TargetFolderPath))
                 {
-                    string driveLabel = UsbDriveWatcher.GetDriveLabel(_settings.TargetDrivePath);
+                    string driveLabel = _settings.TargetDriveLabel;
                     RememberedDriveText = $"{_settings.TargetDrivePath} ({driveLabel})";
                     AutoBackupFullPath = !string.IsNullOrEmpty(_settings.TargetFolderPath) ? _settings.TargetFolderPath : _settings.TargetDrivePath;
                 }
@@ -417,6 +434,7 @@ namespace BackupSyncApp.ViewModels
                 _settings.SourceFolders = new System.Collections.Generic.List<string>(SourceFolders);
                 _settings.TargetDriveId = _targetDriveId;
                 _settings.EnableAutoBackup = IsAutoBackupEnabled;
+                _settings.StartWithWindows = StartWithWindows;
                 _settings.ManualBackupPath = _manualBackupPath;
                 DateTime t;
                 _settings.LastBackupTime = DateTime.TryParse(LastBackupTime, out t)?  t: null;
@@ -481,6 +499,65 @@ namespace BackupSyncApp.ViewModels
             DriveStatusText = L("Txt_Status_Inactive");
             DriveStatusColor = System.Windows.Media.Brushes.Gray;
             AddLog("USB monitoring disabled", LogMessageType.Info);
+        }
+
+        private void UpdateAutoStartSetting(bool enable)
+        {
+            try
+            {
+                string registryKey = @"Software\Microsoft\Windows\CurrentVersion\Run";
+                string appName = "BackupSyncApp";
+                string appPath = System.Windows.Forms.Application.ExecutablePath;
+
+                if (enable)
+                {
+                    using (var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(registryKey, true))
+                    {
+                        key?.SetValue(appName, $"\"{appPath}\"");
+                    }
+                    AddLog("✅ Auto-start enabled (added to Windows Registry)", LogMessageType.Info);
+                }
+                else
+                {
+                    using (var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(registryKey, true))
+                    {
+                        key?.DeleteValue(appName, false);
+                    }
+                    AddLog("⏸️ Auto-start disabled (removed from Windows Registry)", LogMessageType.Info);
+                }
+            }
+            catch (Exception ex)
+            {
+                AddLog($"❌ Error updating auto-start: {ex.Message}", LogMessageType.Error);
+            }
+        }
+
+        private void LoadAutoStartSetting()
+        {
+            try
+            {
+                string registryKey = @"Software\Microsoft\Windows\CurrentVersion\Run";
+                string appName = "BackupSyncApp";
+
+                using (var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(registryKey, false))
+                {
+                    var value = key?.GetValue(appName);
+                    if (value != null)
+                    {
+                        _startWithWindows = true;
+                        AddLog("Auto-start setting loaded from Registry", LogMessageType.Info);
+                    }
+                    else
+                    {
+                        _startWithWindows = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AddLog($"Error loading auto-start setting: {ex.Message}", LogMessageType.Error);
+                _startWithWindows = false;
+            }
         }
 
 
@@ -739,16 +816,17 @@ namespace BackupSyncApp.ViewModels
                     }
 
                     string rootPath = driveInfo.RootDirectory.FullName;
-                    
+                    string driveLabel = UsbDriveWatcher.GetDriveLabel(folderPath);
+
                     _targetDriveId = UsbDriveWatcher.GetDriveUniqueID(rootPath);
                     _settings.TargetDriveId = _targetDriveId;
-
+                    _settings.TargetDriveLabel = driveLabel;
                     _settings.TargetFolderPath = folderPath;
                     _settings.TargetDrivePath = rootPath;
                     
                     SaveSettings();
 
-                    string driveLabel = UsbDriveWatcher.GetDriveLabel(folderPath);
+                    
                     
                     RememberedDriveText= $"{rootPath} ({driveLabel})";
                     AutoBackupFullPath = folderPath;
@@ -859,6 +937,7 @@ namespace BackupSyncApp.ViewModels
                     // new settings
                     _settings.SourceFolders.Clear();
                     _settings.TargetDriveId = "";
+                    _settings.TargetDriveLabel = "";
                     //_settings.TargetDriveId = "";
                     _settings.TargetFolderPath = "";
                     _settings.TargetDrivePath = "";

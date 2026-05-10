@@ -19,6 +19,7 @@ namespace BackupSyncApp.Models
         public string TargetFolderPath { get; set; } = "";
         public string TargetDrivePath { get; set; } = "";
         public DateTime? LastBackupTime { get; set; } = null;
+        public string TargetDriveLabel { get; set; } = "";
         /// AUTO BACKUP IS ENABLED BY DEFAULT.
 
         // MANUAL BACKUP
@@ -26,9 +27,14 @@ namespace BackupSyncApp.Models
         
         // OTHER SETTINGS
         public bool EnableAutoBackup { get; set; } = true;
+        
+        
+        /// RESERVED FOR LATER
         public bool CopyOnlyModified { get; set; }=true;
         public bool IsFirstRun { get; set; } = true;
-
+        /// ==================
+        
+        public bool StartWithWindows { get; set; } = false;
         public string Language { get; set; } = "";
 
         public bool EnableCompression { get; set; } = false;

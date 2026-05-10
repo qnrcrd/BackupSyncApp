@@ -423,4 +423,13 @@ Application restart recommended.</value>
   <data name="Txt_Status_ReadyWaiting" xml:space="preserve">
     <value>Autobackup inactive</value>
   </data>
+  <data name="Header_AutoStart" xml:space="preserve">
+    <value>Auto-start</value>
+  </data>
+  <data name="Chk_StartWithWindows" xml:space="preserve">
+    <value>Start with Windows</value>
+  </data>
+  <data name="Hint_AutoStart" xml:space="preserve">
+    <value>Application will start automatically when Windows boots</value>
+  </data>
 </root>

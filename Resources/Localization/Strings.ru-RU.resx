@@ -417,4 +417,13 @@
   <data name="Txt_Status_ReadyWaiting" xml:space="preserve">
     <value>Автокопирование отключено</value>
   </data>
+  <data name="Header_AutoStart" xml:space="preserve">
+    <value>Автозапуск</value>
+  </data>
+  <data name="Chk_StartWithWindows" xml:space="preserve">
+    <value>Запускать с Windows</value>
+  </data>
+  <data name="Hint_AutoStart" xml:space="preserve">
+    <value>Приложение будет запускаться автоматически при загрузке Windows</value>
+  </data>
 </root>

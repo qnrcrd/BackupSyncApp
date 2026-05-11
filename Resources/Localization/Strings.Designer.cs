@@ -692,6 +692,102 @@ namespace BackupSyncApp.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Done!.
+        /// </summary>
+        public static string Tutorial_Button_Done {
+            get {
+                return ResourceManager.GetString("Tutorial_Button_Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next →.
+        /// </summary>
+        public static string Tutorial_Button_Next {
+            get {
+                return ResourceManager.GetString("Tutorial_Button_Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ← Back.
+        /// </summary>
+        public static string Tutorial_Button_Prev {
+            get {
+                return ResourceManager.GetString("Tutorial_Button_Prev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Everything is ready!
+        ///Now just connect the configured USB drive — and backup will start automatically.
+        ///You can always minimize the application to the tray — it will continue to work..
+        /// </summary>
+        public static string Tutorial_Done_Text {
+            get {
+                return ResourceManager.GetString("Tutorial_Done_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ✅ You&apos;re all set!.
+        /// </summary>
+        public static string Tutorial_Done_Title {
+            get {
+                return ResourceManager.GetString("Tutorial_Done_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1. Add folders you want to back up
+        ///2. Select a USB drive for copying
+        ///3. Enable &quot;Auto-backup&quot; option
+        ///The application will run in the background and wait for the USB drive to be connected..
+        /// </summary>
+        public static string Tutorial_How_Text {
+            get {
+                return ResourceManager.GetString("Tutorial_How_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 📁 How it works.
+        /// </summary>
+        public static string Tutorial_How_Title {
+            get {
+                return ResourceManager.GetString("Tutorial_How_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BackupSyncApp is a simple application for backing up files to USB drives.
+        ///It&apos;s designed specifically for inexperienced users — you don&apos;t need to understand complex settings!.
+        /// </summary>
+        public static string Tutorial_Welcome_Text {
+            get {
+                return ResourceManager.GetString("Tutorial_Welcome_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 👋 Welcome!.
+        /// </summary>
+        public static string Tutorial_Welcome_Title {
+            get {
+                return ResourceManager.GetString("Tutorial_Welcome_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BackypSyncApp - Tutorial.
+        /// </summary>
+        public static string Tutorial_WindowTitle {
+            get {
+                return ResourceManager.GetString("Tutorial_WindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Archiving....
         /// </summary>
         public static string Txt_Archiving {

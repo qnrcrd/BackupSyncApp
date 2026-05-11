@@ -42,31 +42,46 @@ namespace BackupSyncApp.Models
 
         public byte[] EncryptedArchivePassword { get; set;  } =Array.Empty<byte>();
 
-        public void Save(string filePath="settings.json")
+        private static string GetSettingsPath()
+        {
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string appDirectory = Path.Combine(appDataPath, "BackupSyncApp");
+
+            Directory.CreateDirectory(appDirectory);
+            return Path.Combine(appDirectory, "settings.json");
+        }
+        
+        public void Save(string filePath=null)
         {
             try
             {
+                string path = filePath ?? GetSettingsPath();
+
                 string json = JsonSerializer.Serialize(this, new JsonSerializerOptions
                 {
                     WriteIndented = true,
                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
                 });
-                File.WriteAllText(filePath, json);
+                File.WriteAllText(path, json);
             }
-            catch {/* errors currently being ignored */ }
+            catch(Exception ex)
+            { System.Diagnostics.Debug.WriteLine($"Error saving settings: {ex.Message}"); }
         }
 
-        public static AppSettings Load(string filePath="settings.json")
+        public static AppSettings Load(string filePath= null)
         {
             try
             {
-                if(File.Exists(filePath))
+                string path = filePath ?? GetSettingsPath();
+                
+                if(File.Exists(path))
                 {
-                    string json = File.ReadAllText(filePath);
+                    string json = File.ReadAllText(path);
                     return JsonSerializer.Deserialize<AppSettings>(json) ?? new AppSettings();
                 }
             }
-            catch{ /* errors currently being ignored */ }
+            catch(Exception ex)
+            { System.Diagnostics.Debug.WriteLine($"Error loading settings: {ex.Message}"); }
 
             return new AppSettings();
         }
@@ -81,5 +96,7 @@ namespace BackupSyncApp.Models
             // Если система на неподдерживаемом языке, используем английский
             return systemLang.StartsWith("ru", StringComparison.OrdinalIgnoreCase) ? "ru" : "en";
         }
+
+
     }
 }

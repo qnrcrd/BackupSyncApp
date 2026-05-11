@@ -426,4 +426,40 @@
   <data name="Hint_AutoStart" xml:space="preserve">
     <value>Приложение будет запускаться автоматически при загрузке Windows</value>
   </data>
+  <data name="Tutorial_Welcome_Title" xml:space="preserve">
+    <value>👋 Добро пожаловать!</value>
+  </data>
+  <data name="Tutorial_Welcome_Text" xml:space="preserve">
+    <value>BackupSyncApp — простое приложение для резервного копирования файлов на USB-накопители.
+Оно разработано специально для неопытных пользователей — вам не нужно разбираться в сложных настройках!</value>
+  </data>
+  <data name="Tutorial_WindowTitle" xml:space="preserve">
+    <value>BackupSyncApp - Обучение</value>
+  </data>
+  <data name="Tutorial_How_Title" xml:space="preserve">
+    <value>📁 Как это работает</value>
+  </data>
+  <data name="Tutorial_How_Text" xml:space="preserve">
+    <value>1. Добавьте папки, которые хотите резервировать
+2. Выберите USB-диск для копирования
+3. Включите опцию «Авто-копирование»
+Приложение будет работать в фоновом режиме и ждать подключения флешки.</value>
+  </data>
+  <data name="Tutorial_Done_Title" xml:space="preserve">
+    <value> ✅ Всё готово!</value>
+  </data>
+  <data name="Tutorial_Button_Next" xml:space="preserve">
+    <value>Далее →</value>
+  </data>
+  <data name="Tutorial_Button_Prev" xml:space="preserve">
+    <value>← Назад</value>
+  </data>
+  <data name="Tutorial_Button_Done" xml:space="preserve">
+    <value> Готово!</value>
+  </data>
+  <data name="Tutorial_Done_Text" xml:space="preserve">
+    <value>Всё готово!
+Теперь просто подключите настроенную флешку — и бэкап начнётся автоматически.
+Вы всегда можете свернуть приложение в трей — оно продолжит работать.</value>
+  </data>
 </root>

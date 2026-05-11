@@ -26,9 +26,6 @@ namespace BackupSyncApp
         {
             base.OnStartup(e);
 
-            _mainWindow = new MainWindow();
-            _mainWindow.Show();
-
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string logDirectory = Path.Combine(appDataPath, "BackupSyncApp", "Logs");
             Directory.CreateDirectory(logDirectory);
@@ -66,6 +63,18 @@ namespace BackupSyncApp
             };
 
             InitializeTrayIcon();
+
+            _mainWindow = new MainWindow();
+
+            //var settings = Models.AppSettings.Load();
+            if (settings.IsFirstRun)
+            {
+                var tutorial = new Views.TutorialWindow(_mainWindow);
+                tutorial.ShowDialog();
+            }
+
+            
+            _mainWindow.Show();
         }
 
         private void InitializeTrayIcon()

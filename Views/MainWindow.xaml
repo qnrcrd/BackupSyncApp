@@ -15,136 +15,16 @@
 
     <Window.Resources>
 
-        <common:CompressionModeToStringConverter x:Key="CompressionModeConverter"/> 
+        <common:CompressionModeToStringConverter x:Key="CompressionModeConverter"/>
         <common:LanguageToColorConverter x:Key="LanguageToColorConverter"/>
         <common:BoolToPasswordStatusConverter x:Key="BoolToPasswordStatusConverter"/>
         <common:ProgressToVisibilityConverter x:Key="ProgressToVisibilityConverter"/>
         <!-- status text color converter -->
         <local:StatusColorConverter x:Key="StatusColorConverter"/>
-        
+
         <!-- active button highlight converter -->
         <local:ModeToSelectedConverter x:Key="ModeToSelectedConverter"/>
-
-        <!-- 'modern' button style -->
-        <Style x:Key="ModernButton" TargetType="Button">
-            <Setter Property="Background" Value="#2196F3"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="15,8"/>
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="4"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#1976D2"/>
-                </Trigger>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="#0D47A1"/>
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Background" Value="#BDBDBD"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="DangerButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButton}">
-            <Setter Property="Background" Value="#BD0F0F"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#941212"/>
-                </Trigger>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="#732525"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <!-- Style for nav buttons -->
-        <Style x:Key="NavButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButton}">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#757575"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="Padding" Value="15,12"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="Normal"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                BorderThickness="0,0,3,0"
-                                BorderBrush="{TemplateBinding BorderBrush}">
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalAlignment="Center"
-                                            Margin="{TemplateBinding Padding}"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#E3F2FD"/>
-                    <Setter Property="Foreground" Value="#1976D2"/>
-                </Trigger>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="Selected">
-                    <Setter Property="Background" Value="#E3F2FD"/>
-                    <Setter Property="Foreground" Value="#2196F3"/>
-                    <Setter Property="BorderBrush" Value="#2196F3"/>
-                    <Setter Property="FontWeight" Value="Bold"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
-        <!-- GroupBoxes style -->
-        <Style TargetType="GroupBox">
-            <Setter Property="Margin" Value="0,0,0,15"/>
-            <Setter Property="Padding" Value="15"/>
-            <Setter Property="BorderBrush" Value="#E0E0E0"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="GroupBox">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Border Grid.Row="0"
-                                    Background="#2196F3"
-                                    Padding="15,8"
-                                    CornerRadius="4,4,0,0">
-                                <TextBlock Text="{TemplateBinding Header}"
-                                         Foreground="White"
-                                         FontWeight="SemiBold"
-                                         FontSize="14"
-                                         TextTrimming="CharacterEllipsis"/>
-                            </Border>
-                            <Border Grid.Row="1"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="1,0,1,1"
-                                    CornerRadius="0,0,4,4"
-                                    Padding="{TemplateBinding Padding}">
-                                <ContentPresenter/>
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+    
     </Window.Resources>
 
 

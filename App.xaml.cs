@@ -69,7 +69,7 @@ namespace BackupSyncApp
             //var settings = Models.AppSettings.Load();
             if (settings.IsFirstRun)
             {
-                var tutorial = new Views.TutorialWindow(_mainWindow);
+                var tutorial = new Views.TutorialWindow();
                 tutorial.ShowDialog();
             }
 

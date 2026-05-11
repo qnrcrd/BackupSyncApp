@@ -30,12 +30,7 @@ namespace BackupSyncApp.Views
         {
             InitializeComponent();
 
-            if (owner != null)
-            {
-                Owner = owner;
-                WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            }
-            else WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            
 
             // Инициализируем сервис локализации
             var settings = AppSettings.Load();

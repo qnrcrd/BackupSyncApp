@@ -6,6 +6,7 @@
         Height="500" Width="600"  
         ResizeMode="NoResize"  
         Background="#F5F7FA"
+        WindowStartupLocation="CenterScreen" 
         WindowStyle="None"    
         AllowsTransparency="True">
 

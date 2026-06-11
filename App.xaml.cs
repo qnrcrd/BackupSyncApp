@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 using System.IO.Pipes;
 using System.Threading;
 using System.DirectoryServices.ActiveDirectory;
+using BackupSyncApp.ViewModels;
 
 namespace BackupSyncApp
 {
@@ -25,7 +26,9 @@ namespace BackupSyncApp
 
         private NotifyIcon _trayIcon;
         private MainWindow _mainWindow;
+        
         private ILocalizationService _localizationService;
+        private readonly IDialogService _dialogService;
 
         private static Mutex _mutex;
         private const string MutexName = "BackupSync_SingleInstanceMutex";
@@ -114,6 +117,7 @@ namespace BackupSyncApp
                 tutorial.ShowDialog();
             }
 
+            if (_mainWindow.DataContext is MainViewModel vm) vm.CheckReminderOnStartup();
             
             _mainWindow.Show();
         }
@@ -239,7 +243,29 @@ namespace BackupSyncApp
 
         public void ExitApplication()
         {
+            if (_mainWindow?.DataContext is MainViewModel vm)
+            {
+                if (vm.EnableBackupReminder && vm.ShouldRemindOnExit())
+                {
+                    var result = _dialogService.ShowYesNoMessageBox("Msg_ReminderClose", "Msg_ReminderCloseTitle", MessageBoxImage.Question);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        _mainWindow.Show();
+                        _mainWindow.WindowState = System.Windows.WindowState.Normal;
+                        _mainWindow.Activate();
+                        return;
+                    }
+                    else
+                    {
+                        vm.MarkReminderAsShown();
+                    }
+                }
+            }
+            
             _trayIcon?.Dispose();
+            _mutex?.ReleaseMutex();
+            _mutex?.Dispose();
             Shutdown();
         }
 

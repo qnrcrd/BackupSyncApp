@@ -468,4 +468,46 @@ The application will run in the background and wait for the USB drive to be conn
 Now just connect the configured USB drive — and backup will start automatically.
 You can always minimize the application to the tray — it will continue to work.</value>
   </data>
+  <data name="Header_BackupReminder" xml:space="preserve">
+    <value>Reminder</value>
+  </data>
+  <data name="Chk_EnableReminder" xml:space="preserve">
+    <value>Enable reminder</value>
+  </data>
+  <data name="Txt_ReminderFrequency" xml:space="preserve">
+    <value>Frequency:</value>
+  </data>
+  <data name="Txt_DayOfWeek" xml:space="preserve">
+    <value>Day of week:</value>
+  </data>
+  <data name="Txt_DayOfMonth" xml:space="preserve">
+    <value>Day of month:</value>
+  </data>
+  <data name="Txt_ReminderDate" xml:space="preserve">
+    <value> Date:</value>
+  </data>
+  <data name="Hint_Reminder" xml:space="preserve">
+    <value>You will be notified on the selected day if no backup was done</value>
+  </data>
+  <data name="Reminder_BackupDayArrived" xml:space="preserve">
+    <value>Today is backup day! Don't forget to backup!</value>
+  </data>
+  <data name="ReminderMode_Daily" xml:space="preserve">
+    <value>Daily</value>
+  </data>
+  <data name="ReminderMode_Weekly" xml:space="preserve">
+    <value>Weekly</value>
+  </data>
+  <data name="ReminderMode_Monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="ReminderMode_Yearly" xml:space="preserve">
+    <value>Yearly</value>
+  </data>
+  <data name="Msg_ReminderClose" xml:space="preserve">
+    <value>You haven't done a backup today. Do it now?</value>
+  </data>
+  <data name="Msg_ReminderCloseTitle" xml:space="preserve">
+    <value>Backup Reminder</value>
+  </data>
 </root>

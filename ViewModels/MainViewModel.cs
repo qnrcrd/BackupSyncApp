@@ -99,6 +99,67 @@ namespace BackupSyncApp.ViewModels
         public Visibility IsSettingsModeVisible => SelectedMode == "Settings" ? Visibility.Visible : Visibility.Collapsed;
 
 
+        // ==== BACKUP REMINDERS ====
+        private bool _enableBackupReminder;
+        public bool EnableBackupReminder
+        {
+            get => _enableBackupReminder;
+            set
+            {
+                if (SetField(ref _enableBackupReminder, value)) SaveSettings();
+            }
+        }
+
+        private ReminderFrequency _selectedReminderFrequency = ReminderFrequency.Monthly;
+        public ReminderFrequency SelectedReminderFrequency
+        {
+            get => _selectedReminderFrequency;
+            set
+            {
+                if (SetField(ref _selectedReminderFrequency, value))
+                {
+                    SaveSettings();
+                    OnPropertyChanged(nameof(IsWeeklyVisible));
+                    OnPropertyChanged(nameof(IsMonthlyVisible));
+                    OnPropertyChanged(nameof(IsYearlyVisible));
+                }
+            }
+        }
+
+        // Видимость элементов UI в зависимости от частоты
+        public Visibility IsWeeklyVisible => SelectedReminderFrequency == ReminderFrequency.Weekly ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility IsMonthlyVisible => SelectedReminderFrequency == ReminderFrequency.Monthly ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility IsYearlyVisible => SelectedReminderFrequency == ReminderFrequency.Yearly ? Visibility.Visible : Visibility.Collapsed;
+
+        private DayOfWeek _selectedDayOfWeek = DayOfWeek.Monday;
+        public DayOfWeek SelectedDayOfWeek
+        {
+            get => _selectedDayOfWeek;
+            set => SetField(ref _selectedDayOfWeek, value);
+        }
+
+        private int _selectedDayOfMonth = 1;
+        public int SelectedDayOfMonth
+        {
+            get => _selectedDayOfMonth;
+            set => SetField(ref _selectedDayOfMonth, value);
+        }
+
+        private DateTime? _selectedYearlyDate;
+        public DateTime? SelectedYearlyDate
+        {
+            get => _selectedYearlyDate;
+            set => SetField(ref _selectedYearlyDate, value);
+        }
+
+        // Дни недели для ComboBox
+        public DayOfWeek[] DaysOfWeek => (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek));
+
+        // Дни месяца для ComboBox (1-31)
+        public int[] DaysOfMonth => Enumerable.Range(1, 31).ToArray();
+
+
+        // language
         private string _selectedLanguage = "ru";
         public string SelectedLanguage
         {
@@ -384,8 +445,13 @@ namespace BackupSyncApp.ViewModels
                 _enableCompression = _settings.EnableCompression;
                 _selectedCompressMode = _settings.CompressionMode;
                 _selectedLanguage = _settings.GetLanguageOrDefault();
-                if (_settings.LastBackupTime.HasValue) LastBackupTime = _settings.LastBackupTime.ToString();
+                
+                //if (_settings.LastBackupTime.HasValue) LastBackupTime = _settings.LastBackupTime.ToString();
 
+                
+
+
+                // PATH + DRIVE SETTINGS
                 foreach (var folder in _settings.SourceFolders)
                 {
                     if (Directory.Exists(folder)) SourceFolders.Add(folder);
@@ -416,7 +482,14 @@ namespace BackupSyncApp.ViewModels
                 if (_settings.EnableAutoBackup) IsAutoBackupEnabled = true;
 
                 if (_settings.LastBackupTime.HasValue) LastBackupTime = _settings.LastBackupTime.Value.ToString("dd.MM.yyyy HH:mm");
-                
+
+                // REMINDER SETTINGS
+                EnableBackupReminder = _settings.EnableBackupReminder;
+                SelectedReminderFrequency = _settings._ReminderFrequency;
+                SelectedDayOfWeek = _settings.ReminderDayOfWeek ?? DayOfWeek.Monday;
+                SelectedDayOfMonth = _settings.ReminderDayOfMonth ?? 1;
+                SelectedYearlyDate = _settings.ReminderDate;
+
                 ApplyLanguageFromSettings();
 
                 AddLog("Settings loaded", LogMessageType.Info);
@@ -436,6 +509,13 @@ namespace BackupSyncApp.ViewModels
                 _settings.EnableAutoBackup = IsAutoBackupEnabled;
                 _settings.StartWithWindows = StartWithWindows;
                 _settings.ManualBackupPath = _manualBackupPath;
+
+                _settings.EnableBackupReminder = EnableBackupReminder;
+                _settings._ReminderFrequency = SelectedReminderFrequency;
+                _settings.ReminderDayOfWeek = SelectedDayOfWeek;
+                _settings.ReminderDayOfMonth = SelectedDayOfMonth;
+                _settings.ReminderDate = SelectedYearlyDate;
+
                 DateTime t;
                 _settings.LastBackupTime = DateTime.TryParse(LastBackupTime, out t)?  t: null;
                 _settings.Save();
@@ -500,6 +580,78 @@ namespace BackupSyncApp.ViewModels
             DriveStatusColor = System.Windows.Media.Brushes.Gray;
             AddLog("USB monitoring disabled", LogMessageType.Info);
         }
+
+        // === BACKUP REMINDERS ===
+
+        public void CheckReminderOnStartup()
+        {
+            if (!_enableBackupReminder) return;
+            DateTime now= DateTime.Now;
+
+            bool isReminderDay = IsTodayReminderDay(now);
+
+            if (!isReminderDay) return;
+
+            bool backupDoneSinceLastReminder = _settings.LastBackupTime.HasValue && 
+                _settings.LastBackupTime.Value > (_settings.LastReminderDate ?? DateTime.MinValue);
+            if (!backupDoneSinceLastReminder)
+            {
+                UpdateUiProperty(() =>
+                {
+                    AddLog("⏰ Reminder: Backup day arrived! No backup done since last reminder.", LogMessageType.Warning);
+
+                    if (System.Windows.Application.Current is App app) app.ShowTrayNotification(L("Reminder_BackupDayArrived"), isError: false);
+                });
+            }
+        }
+
+        public bool ShouldRemindOnExit()
+        {
+            if (!_enableBackupReminder) return false;
+            DateTime now = DateTime.Now;
+            bool isReminderDay = IsTodayReminderDay(now);
+
+            if(!isReminderDay) return false;
+
+            bool backupDoneToday = _settings.LastBackupTime.HasValue &&
+                _settings.LastBackupTime.Value.Date == now.Date;
+            return !backupDoneToday;
+        }
+
+        private bool IsTodayReminderDay(DateTime now)
+        {
+            switch (_settings._ReminderFrequency)
+            {
+                case ReminderFrequency.Daily:
+                    return true;
+                case ReminderFrequency.Weekly:
+                    return now.DayOfWeek == _settings.ReminderDayOfWeek;
+                case ReminderFrequency.Monthly:
+                    // < 31 days
+                    int daysInMonth=DateTime.DaysInMonth(now.Year, now.Month);
+                    int targetDay = _settings.ReminderDayOfMonth ?? 1;
+                    int actualDay = Math.Min(targetDay, daysInMonth); // if target day is 31 but month has 30, then LAST DAY
+                    return now.Day == actualDay;
+                case ReminderFrequency.Yearly:
+                    if (_settings.ReminderDate.HasValue)
+                    {
+                        return now.Month == _settings.ReminderDate.Value.Month &&
+                            now.Day == _settings.ReminderDate.Value.Day;
+                    }
+                    return false;
+
+                default: return false;
+            }
+        }
+
+        public void MarkReminderAsShown()
+        {
+            _settings.LastReminderDate = DateTime.Now;
+            SaveSettings();
+            AddLog("✅ Reminder marked as shown", LogMessageType.Info);
+        }
+
+        // ========================================
 
         private void UpdateAutoStartSetting(bool enable)
         {

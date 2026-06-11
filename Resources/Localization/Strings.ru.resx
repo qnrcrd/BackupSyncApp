@@ -462,4 +462,46 @@
 Теперь просто подключите настроенную флешку — и бэкап начнётся автоматически.
 Вы всегда можете свернуть приложение в трей — оно продолжит работать.</value>
   </data>
+  <data name="Header_BackupReminder" xml:space="preserve">
+    <value>Напоминание</value>
+  </data>
+  <data name="Chk_EnableReminder" xml:space="preserve">
+    <value> Включить напоминание</value>
+  </data>
+  <data name="Txt_ReminderFrequency" xml:space="preserve">
+    <value>Периодичность:</value>
+  </data>
+  <data name="Txt_DayOfWeek" xml:space="preserve">
+    <value> День недели:</value>
+  </data>
+  <data name="Txt_DayOfMonth" xml:space="preserve">
+    <value>День месяца:</value>
+  </data>
+  <data name="Txt_ReminderDate" xml:space="preserve">
+    <value>Дата:</value>
+  </data>
+  <data name="Hint_Reminder" xml:space="preserve">
+    <value>Вы получите уведомление в выбранный день, если бэкап не был сделан</value>
+  </data>
+  <data name="Reminder_BackupDayArrived" xml:space="preserve">
+    <value>Сегодня день бэкапа! Не забудьте сделать резервную копию!</value>
+  </data>
+  <data name="ReminderMode_Daily" xml:space="preserve">
+    <value>Ежедневно</value>
+  </data>
+  <data name="ReminderMode_Weekly" xml:space="preserve">
+    <value>Еженедельно</value>
+  </data>
+  <data name="ReminderMode_Monthly" xml:space="preserve">
+    <value>Ежемесячно</value>
+  </data>
+  <data name="ReminderMode_Yearly" xml:space="preserve">
+    <value>Ежегодно</value>
+  </data>
+  <data name="Msg_ReminderClose" xml:space="preserve">
+    <value>Вы не сделали бэкап сегодня. Сделать сейчас?</value>
+  </data>
+  <data name="Msg_ReminderCloseTitle" xml:space="preserve">
+    <value>Напоминание о бэкапе</value>
+  </data>
 </root>

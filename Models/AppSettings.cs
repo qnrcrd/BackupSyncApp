@@ -8,6 +8,7 @@ using System.Reflection.Metadata;
 using System.Globalization;
 using System.IO.Compression;
 using BackupSyncApp.Common;
+using Microsoft.Xaml.Behaviors.Core;
 namespace BackupSyncApp.Models
 {
     public class AppSettings
@@ -28,12 +29,21 @@ namespace BackupSyncApp.Models
         // OTHER SETTINGS
         public bool EnableAutoBackup { get; set; } = true;
         
-        
-        /// RESERVED FOR LATER
-        public bool CopyOnlyModified { get; set; }=true;
         public bool IsFirstRun { get; set; } = true;
+
+        // BACKUP REMINDER SETTINGS
+        public bool EnableBackupReminder { get; set; } = false;
+        public ReminderFrequency _ReminderFrequency { get; set; } = ReminderFrequency.Monthly;
+        public DayOfWeek? ReminderDayOfWeek {  get; set; }= DayOfWeek.Monday;//weekly
+        public int? ReminderDayOfMonth { get; set; } = 1;//monthly (1-31)
+        public DateTime? ReminderDate { get; set; } = null;//yearly (day+month)
+        public DateTime? LastReminderDate { get; set; } = null;
+        public DateTime? LastBackupBeforeReminder {  get; set; } = null;
+
+        /// RESERVED FOR LATER
+        public bool CopyOnlyModified { get; set; } = true;
         /// ==================
-        
+
         public bool StartWithWindows { get; set; } = false;
         public string Language { get; set; } = "";
 
@@ -41,6 +51,8 @@ namespace BackupSyncApp.Models
         public CompressMode CompressionMode { get; set; } = CompressMode.Balanced;// Fast, Balanced, Maximum
 
         public byte[] EncryptedArchivePassword { get; set;  } =Array.Empty<byte>();
+
+        
 
         private static string GetSettingsPath()
         {

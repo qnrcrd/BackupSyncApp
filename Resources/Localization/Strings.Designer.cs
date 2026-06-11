@@ -160,6 +160,15 @@ namespace BackupSyncApp.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable reminder.
+        /// </summary>
+        public static string Chk_EnableReminder {
+            get {
+                return ResourceManager.GetString("Chk_EnableReminder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start with Windows.
         /// </summary>
         public static string Chk_StartWithWindows {
@@ -286,6 +295,15 @@ namespace BackupSyncApp.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reminder.
+        /// </summary>
+        public static string Header_BackupReminder {
+            get {
+                return ResourceManager.GetString("Header_BackupReminder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language/Язык.
         /// </summary>
         public static string Header_LanguageSettings {
@@ -363,6 +381,15 @@ namespace BackupSyncApp.Resources.Localization {
         public static string Hint_LanguageSettings {
             get {
                 return ResourceManager.GetString("Hint_LanguageSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You will be notified on the selected day if no backup was done.
+        /// </summary>
+        public static string Hint_Reminder {
+            get {
+                return ResourceManager.GetString("Hint_Reminder", resourceCulture);
             }
         }
         
@@ -507,6 +534,24 @@ namespace BackupSyncApp.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You haven&apos;t done a backup today. Do it now?.
+        /// </summary>
+        public static string Msg_ReminderClose {
+            get {
+                return ResourceManager.GetString("Msg_ReminderClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup Reminder.
+        /// </summary>
+        public static string Msg_ReminderCloseTitle {
+            get {
+                return ResourceManager.GetString("Msg_ReminderCloseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to reset all settings? This will remove:
         ///- All configured folders
         ///- USB disk settings
@@ -625,6 +670,51 @@ namespace BackupSyncApp.Resources.Localization {
         public static string Nav_Settings {
             get {
                 return ResourceManager.GetString("Nav_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Today is backup day! Don&apos;t forget to backup!.
+        /// </summary>
+        public static string Reminder_BackupDayArrived {
+            get {
+                return ResourceManager.GetString("Reminder_BackupDayArrived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Daily.
+        /// </summary>
+        public static string ReminderMode_Daily {
+            get {
+                return ResourceManager.GetString("ReminderMode_Daily", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monthly.
+        /// </summary>
+        public static string ReminderMode_Monthly {
+            get {
+                return ResourceManager.GetString("ReminderMode_Monthly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weekly.
+        /// </summary>
+        public static string ReminderMode_Weekly {
+            get {
+                return ResourceManager.GetString("ReminderMode_Weekly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yearly.
+        /// </summary>
+        public static string ReminderMode_Yearly {
+            get {
+                return ResourceManager.GetString("ReminderMode_Yearly", resourceCulture);
             }
         }
         
@@ -869,6 +959,24 @@ namespace BackupSyncApp.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Day of month:.
+        /// </summary>
+        public static string Txt_DayOfMonth {
+            get {
+                return ResourceManager.GetString("Txt_DayOfMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Day of week:.
+        /// </summary>
+        public static string Txt_DayOfWeek {
+            get {
+                return ResourceManager.GetString("Txt_DayOfWeek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disk Info.
         /// </summary>
         public static string Txt_DiskInfo {
@@ -937,6 +1045,24 @@ namespace BackupSyncApp.Resources.Localization {
         public static string Txt_RememberedDriveNone {
             get {
                 return ResourceManager.GetString("Txt_RememberedDriveNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  Date:.
+        /// </summary>
+        public static string Txt_ReminderDate {
+            get {
+                return ResourceManager.GetString("Txt_ReminderDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency:.
+        /// </summary>
+        public static string Txt_ReminderFrequency {
+            get {
+                return ResourceManager.GetString("Txt_ReminderFrequency", resourceCulture);
             }
         }
         

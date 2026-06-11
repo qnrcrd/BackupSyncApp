@@ -8,6 +8,11 @@ using BackupSyncApp.Views;
 using System.Windows.Forms;
 using BackupSyncApp.Services;
 using BackupSyncApp.Resources;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.IO.Pipes;
+using System.Threading;
+using System.DirectoryServices.ActiveDirectory;
 
 namespace BackupSyncApp
 {
@@ -22,9 +27,43 @@ namespace BackupSyncApp
         private MainWindow _mainWindow;
         private ILocalizationService _localizationService;
 
+        private static Mutex _mutex;
+        private const string MutexName = "BackupSync_SingleInstanceMutex";
+        private const string PipeName = "BackupSync_InstancePipe";
+
+        private NamedPipeServerStream _pipeServer;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            bool createdNew;
+            _mutex = new Mutex(true, MutexName, out createdNew);
+
+            if (!createdNew)
+            {
+                // === Приложение уже запущено! ===
+                try
+                {
+                    using (var client = new NamedPipeClientStream(".", PipeName, PipeDirection.Out))
+                    {
+                        client.Connect(1000);
+                        using (var writer = new StreamWriter(client))
+                        {
+                            writer.Write("RESTORE_WINDOW");
+                            writer.Flush();
+                        }
+                    }
+                    App.LogToFile("Signal sent to existing instance to restore window.");
+                }
+                catch (Exception ex)
+                {
+                    App.LogToFile($"Failed to send signal: {ex.Message}");
+                }
+                Shutdown();
+                return;
+
+            }
 
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string logDirectory = Path.Combine(appDataPath, "BackupSyncApp", "Logs");
@@ -64,6 +103,8 @@ namespace BackupSyncApp
 
             InitializeTrayIcon();
 
+            StartPipeServer();
+
             _mainWindow = new MainWindow();
 
             //var settings = Models.AppSettings.Load();
@@ -75,6 +116,47 @@ namespace BackupSyncApp
 
             
             _mainWindow.Show();
+        }
+
+        // PIPELINE SERVER FOR SIGNALS BETWEEN INSTANCES
+        private void StartPipeServer()
+        {
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    try
+                    {
+                        _pipeServer = new NamedPipeServerStream(PipeName, PipeDirection.In);
+                        _pipeServer.WaitForConnection();
+
+                        using (var reader = new StreamReader(_pipeServer))
+                        {
+                            string message = reader.ReadToEnd();
+                            if (message == "RESTORE_WINDOW")
+                            {
+                                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                                {
+                                    if (MainWindow != null)
+                                    {
+                                        _mainWindow.Show();
+                                        _mainWindow.WindowState = WindowState.Normal;
+                                        _mainWindow.Activate();
+                                    }
+                                });
+
+                                App.LogToFile("Window restored via IPC signal.");
+                            }
+                        }
+                        _pipeServer.Disconnect();
+                    }
+                    catch (Exception ex)
+                    {
+                        App.LogToFile($"Pipe server error: {ex.Message}");
+                    }
+
+                }
+            });
         }
 
         private void InitializeTrayIcon()
@@ -182,6 +264,9 @@ namespace BackupSyncApp
         protected override void OnExit(ExitEventArgs e)
         {
             _trayIcon?.Dispose();
+            _pipeServer?.Dispose();
+            _mutex?.ReleaseMutex();
+            _mutex.Dispose();
             base.OnExit(e);
         }
 

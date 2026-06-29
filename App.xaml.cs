@@ -28,7 +28,7 @@ namespace BackupSyncApp
         private MainWindow _mainWindow;
         
         private ILocalizationService _localizationService;
-        private readonly IDialogService _dialogService;
+        private IDialogService _dialogService;
 
         private static Mutex _mutex;
         private const string MutexName = "BackupSync_SingleInstanceMutex";
@@ -74,7 +74,9 @@ namespace BackupSyncApp
             _logFilePath = Path.Combine(logDirectory, $"app_{DateTime.Now:yyyyMMdd}.log");
 
             var settings = Models.AppSettings.Load();
+            
             _localizationService = new LocalizationService(settings);
+            _dialogService = new DialogService(_localizationService);
 
             AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
             {
@@ -291,8 +293,8 @@ namespace BackupSyncApp
         {
             _trayIcon?.Dispose();
             _pipeServer?.Dispose();
-            _mutex?.ReleaseMutex();
-            _mutex.Dispose();
+            //_mutex?.ReleaseMutex();
+            //_mutex.Dispose();
             base.OnExit(e);
         }
 

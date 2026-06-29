@@ -44,7 +44,7 @@
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>QAAIgIAASACAAAAAAAQAABAAAEAQoAEAAAAEAAAAAAA=</HashCode>
+      <HashCode>wQAIgIAASACAIABEcAQAABAAAEAQoAEAAAAEAAAAAEA=</HashCode>
       <FileName>Models\AppSettings.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -56,9 +56,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="BackupSyncApp.Resources.Localization.Strings" Collapsed="true">
-    <Position X="10" Y="3.5" Width="1.5" />
+    <Position X="3" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>LGxCDAZFLxIZkRWNwBGTFNRhAVpEAAJIMIxClkBAgMA=</HashCode>
+      <HashCode>LGxCDwZlLx4ZmRWdyFmTFNZxCVpEAgJIcKxGlkBEwOE=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="BackupSyncApp.Services.ArchiveResult" Collapsed="true">
@@ -100,7 +100,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="BackupSyncApp.Services.UsbDriveWatcher" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="3" Y="4.5" Width="1.5" />
+    <Position X="6.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAACgAAEAACABABABAAAIEAAAAAgAAIAAAAAQ=</HashCode>
       <FileName>Services\UsbDriveWatcher.cs</FileName>
@@ -118,7 +118,7 @@
   <Class Name="BackupSyncApp.ViewModels.MainViewModel" Collapsed="true">
     <Position X="0.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>kNhQ0DVCHiAjEsBygQBAILYABuQg0m2ViYAcAK4CThI=</HashCode>
+      <HashCode>kdpQ+DVDniBjMuByhSABILYYFuQ00m2ViYIcAK4CTxI=</HashCode>
       <FileName>ViewModels\MainViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -139,7 +139,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="BackupSyncApp.Views.StatusColorConverter" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="8.25" Y="3.5" Width="1.5" />
+    <Position X="10" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\StatusColorConverter.cs</FileName>
@@ -175,6 +175,22 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAQAAAAAAAIA=</HashCode>
     </TypeIdentifier>
+  </Class>
+  <Class Name="BackupSyncApp.Common.ReminderFrequencyToStringConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\ReminderFrequencyToStringConverter.cs.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BackupSyncApp.Views.TutorialWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAQAAAAAAAABAEAAAAAAAAAAAEAAAAAAABQAAgA=</HashCode>
+      <FileName>Views\TutorialWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Interface Name="BackupSyncApp.Services.IArchiveService" Collapsed="true">
     <Position X="3" Y="5.75" Width="1.5" />
@@ -216,6 +232,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAYAAAAAAABAAAgAAAAAAAAAAAECAAAA=</HashCode>
       <FileName>Common\LogMessageType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BackupSyncApp.Common.ReminderFrequency" Collapsed="true">
+    <Position X="6.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAgAAAAAAgA=</HashCode>
+      <FileName>Common\ReminderFrequency.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

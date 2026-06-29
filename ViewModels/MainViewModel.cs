@@ -125,6 +125,8 @@ namespace BackupSyncApp.ViewModels
                 }
             }
         }
+        
+        public ReminderFrequency[] ReminderFrequencies => (ReminderFrequency[])Enum.GetValues(typeof(ReminderFrequency));
 
         // Видимость элементов UI в зависимости от частоты
         public Visibility IsWeeklyVisible => SelectedReminderFrequency == ReminderFrequency.Weekly ? Visibility.Visible : Visibility.Collapsed;

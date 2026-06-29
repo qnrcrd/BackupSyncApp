@@ -46,6 +46,11 @@ namespace BackupSyncApp.Views
 
             DataContext = _viewModel;
 
+            _viewModel.RequestShutdown += () =>
+            {
+                System.Windows.Application.Current.Shutdown();
+            };
+
             //this.StateChanged += MainWindow_StateChanged;
             this.Closing += MainWindow_Closing;
 

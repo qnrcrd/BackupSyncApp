@@ -555,8 +555,8 @@ namespace BackupSyncApp.Resources.Localization {
         ///   Looks up a localized string similar to Are you sure you want to reset all settings? This will remove:
         ///- All configured folders
         ///- USB disk settings
-        /// - Auto-backup settings
-        ///The application will restart..
+        ///- Auto-backup settings
+        ///- Reminder settings.
         /// </summary>
         public static string Msg_ResetSettings {
             get {

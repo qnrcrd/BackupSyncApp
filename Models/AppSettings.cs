@@ -33,7 +33,7 @@ namespace BackupSyncApp.Models
 
         // BACKUP REMINDER SETTINGS
         public bool EnableBackupReminder { get; set; } = false;
-        public ReminderFrequency _ReminderFrequency { get; set; } = ReminderFrequency.Monthly;
+        public ReminderFrequency ReminderFrequency { get; set; } = ReminderFrequency.Monthly;
         public DayOfWeek? ReminderDayOfWeek {  get; set; }= DayOfWeek.Monday;//weekly
         public int? ReminderDayOfMonth { get; set; } = 1;//monthly (1-31)
         public DateTime? ReminderDate { get; set; } = null;//yearly (day+month)
@@ -54,7 +54,7 @@ namespace BackupSyncApp.Models
 
         
 
-        private static string GetSettingsPath()
+        public static string GetSettingsPath()
         {
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string appDirectory = Path.Combine(appDataPath, "BackupSyncApp");

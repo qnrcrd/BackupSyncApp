@@ -118,6 +118,7 @@ namespace BackupSyncApp.ViewModels
             {
                 if (SetField(ref _selectedReminderFrequency, value))
                 {
+                    _settings.ReminderFrequency = value;
                     SaveSettings();
                     OnPropertyChanged(nameof(IsWeeklyVisible));
                     OnPropertyChanged(nameof(IsMonthlyVisible));
@@ -137,21 +138,33 @@ namespace BackupSyncApp.ViewModels
         public DayOfWeek SelectedDayOfWeek
         {
             get => _selectedDayOfWeek;
-            set => SetField(ref _selectedDayOfWeek, value);
+            set
+            {
+               if (SetField(ref _selectedDayOfWeek, value))
+                    SaveSettings();
+            }
         }
 
         private int _selectedDayOfMonth = 1;
         public int SelectedDayOfMonth
         {
             get => _selectedDayOfMonth;
-            set => SetField(ref _selectedDayOfMonth, value);
+            set
+            {
+                if (SetField(ref _selectedDayOfMonth, value))
+                    SaveSettings();
+            }
         }
 
         private DateTime? _selectedYearlyDate;
         public DateTime? SelectedYearlyDate
         {
             get => _selectedYearlyDate;
-            set => SetField(ref _selectedYearlyDate, value);
+            set
+            {
+                if (SetField(ref _selectedYearlyDate, value))
+                    SaveSettings();
+            }
         }
 
         // Дни недели для ComboBox
@@ -369,6 +382,7 @@ namespace BackupSyncApp.ViewModels
         private bool _isBackupInProgress = false;
         string FolderPath;
 
+        public event Action RequestShutdown;
 
         // MainViewModel Constructor
         public MainViewModel(
@@ -443,15 +457,14 @@ namespace BackupSyncApp.ViewModels
                 DriveStatusText = _localizationService["Txt_Status_Inactive"];
                 DriveStatusColor = System.Windows.Media.Brushes.Gray;
                 StatusText = _localizationService["Txt_Ready"];
+                
                 StartWithWindows = _settings.StartWithWindows;
+                
                 _enableCompression = _settings.EnableCompression;
                 _selectedCompressMode = _settings.CompressionMode;
                 _selectedLanguage = _settings.GetLanguageOrDefault();
                 
                 //if (_settings.LastBackupTime.HasValue) LastBackupTime = _settings.LastBackupTime.ToString();
-
-                
-
 
                 // PATH + DRIVE SETTINGS
                 foreach (var folder in _settings.SourceFolders)
@@ -486,11 +499,21 @@ namespace BackupSyncApp.ViewModels
                 if (_settings.LastBackupTime.HasValue) LastBackupTime = _settings.LastBackupTime.Value.ToString("dd.MM.yyyy HH:mm");
 
                 // REMINDER SETTINGS
-                EnableBackupReminder = _settings.EnableBackupReminder;
-                SelectedReminderFrequency = _settings._ReminderFrequency;
-                SelectedDayOfWeek = _settings.ReminderDayOfWeek ?? DayOfWeek.Monday;
-                SelectedDayOfMonth = _settings.ReminderDayOfMonth ?? 1;
-                SelectedYearlyDate = _settings.ReminderDate;
+                _enableBackupReminder = _settings.EnableBackupReminder;
+                _selectedReminderFrequency = _settings.ReminderFrequency;
+                
+                _selectedDayOfWeek = _settings.ReminderDayOfWeek ?? DayOfWeek.Monday;
+                _selectedDayOfMonth = _settings.ReminderDayOfMonth ?? 1;
+                _selectedYearlyDate = _settings.ReminderDate;
+
+                OnPropertyChanged(nameof(EnableBackupReminder));
+                OnPropertyChanged(nameof(SelectedReminderFrequency));
+                OnPropertyChanged(nameof(SelectedDayOfWeek));
+                OnPropertyChanged(nameof(SelectedDayOfMonth));
+                OnPropertyChanged(nameof(SelectedYearlyDate));
+                OnPropertyChanged(nameof(IsWeeklyVisible));
+                OnPropertyChanged(nameof(IsMonthlyVisible));
+                OnPropertyChanged(nameof(IsYearlyVisible));
 
                 ApplyLanguageFromSettings();
 
@@ -513,7 +536,7 @@ namespace BackupSyncApp.ViewModels
                 _settings.ManualBackupPath = _manualBackupPath;
 
                 _settings.EnableBackupReminder = EnableBackupReminder;
-                _settings._ReminderFrequency = SelectedReminderFrequency;
+                _settings.ReminderFrequency = SelectedReminderFrequency;
                 _settings.ReminderDayOfWeek = SelectedDayOfWeek;
                 _settings.ReminderDayOfMonth = SelectedDayOfMonth;
                 _settings.ReminderDate = SelectedYearlyDate;
@@ -526,7 +549,7 @@ namespace BackupSyncApp.ViewModels
             }
             catch (System.Exception ex)
             {
-                AddLog($"Error loading settings: {ex.Message}", LogMessageType.Error);
+                AddLog($"Error saving settings: {ex.Message}", LogMessageType.Error);
             }
         }
 
@@ -622,7 +645,7 @@ namespace BackupSyncApp.ViewModels
 
         private bool IsTodayReminderDay(DateTime now)
         {
-            switch (_settings._ReminderFrequency)
+            switch (_settings.ReminderFrequency)
             {
                 case ReminderFrequency.Daily:
                     return true;
@@ -1063,10 +1086,10 @@ namespace BackupSyncApp.ViewModels
             {
                 try
                 {
-                    string settingsFile = "settings.json";
-                    if (System.IO.File.Exists(settingsFile))
+                    string settingsFile = AppSettings.GetSettingsPath();
+                    if (File.Exists(settingsFile))
                     {
-                        System.IO.File.Delete(settingsFile);
+                        File.Delete(settingsFile);
                         AddLog("settings file deleted", LogMessageType.Info);
                     }
 
@@ -1092,16 +1115,21 @@ namespace BackupSyncApp.ViewModels
                     _settings.SourceFolders.Clear();
                     _settings.TargetDriveId = "";
                     _settings.TargetDriveLabel = "";
+                    _settings.IsFirstRun = false;
                     //_settings.TargetDriveId = "";
                     _settings.TargetFolderPath = "";
                     _settings.TargetDrivePath = "";
                     _settings.EnableAutoBackup = false;
                     _settings.EnableCompression = false;
+                    _settings.EnableBackupReminder= false;
 
                     AddLog("All settings reset to default", LogMessageType.Success);     
                     _dialogService.ShowMessageBox("Msg_SettingsReseted", "Msg_ResetSettingsTitle", MessageBoxImage.Information);
 
                     SaveSettings();
+
+                    RequestShutdown?.Invoke();
+                    
                 }
                 catch (Exception ex)
                 {

@@ -448,7 +448,7 @@
                                                        Foreground="#757575"
                                                        Width="120"/>
                                             <ComboBox ItemsSource="{Binding ReminderFrequencies}"
-                                                      SelectedItem="{Binding SelectedReminderFrequency}"
+                                                      SelectedItem="{Binding SelectedReminderFrequency, Mode=TwoWay}"
                                                       Width="150">
                                                 <ComboBox.ItemTemplate>
                                                     <DataTemplate>

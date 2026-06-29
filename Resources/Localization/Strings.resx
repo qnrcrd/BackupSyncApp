@@ -233,8 +233,8 @@ Selected disk type: {0}</value>
     <value>Are you sure you want to reset all settings? This will remove:
 - All configured folders
 - USB disk settings
- - Auto-backup settings
-The application will restart.</value>
+- Auto-backup settings
+- Reminder settings</value>
   </data>
   <data name="Msg_ResetSettingsTitle" xml:space="preserve">
     <value>Reset settings</value>

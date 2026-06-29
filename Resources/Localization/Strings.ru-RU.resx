@@ -226,16 +226,17 @@
   </data>
   <data name="Msg_ResetSettings" xml:space="preserve">
     <value>Вы уверены что хотите сбросить настройки? Это действие сбросит:
-- Список источников копирования
-- Настройки автоматического копирования
- - Выбор целевых носителей</value>
+- Источники копирования
+- Настройки копирования
+- Выбор целевых носителей
+- Настройки напоминания</value>
   </data>
   <data name="Msg_ResetSettingsTitle" xml:space="preserve">
     <value>Сброс настроек</value>
   </data>
   <data name="Msg_SettingsReseted" xml:space="preserve">
     <value>Настройки сброшены.
-Рекомендуем перезапустить приложение для лучшего эффекта.</value>
+Рекомендуем перезапустить приложение</value>
   </data>
   <data name="Txt_Copying" xml:space="preserve">
     <value>Копирование... {0}%</value>

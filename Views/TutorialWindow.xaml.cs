@@ -86,9 +86,9 @@ namespace BackupSyncApp.Views
             else
             {
                 // Завершаем туториал и сбрасываем флаг
-                var settings = AppSettings.Load();
-                settings.IsFirstRun = false;
-                settings.Save();
+                //var settings = AppSettings.Load();
+                //settings.IsFirstRun = false;
+                //settings.Save();
 
                 Close();
             }

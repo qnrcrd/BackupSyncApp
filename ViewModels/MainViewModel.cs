@@ -419,12 +419,41 @@ namespace BackupSyncApp.ViewModels
 
 
             InitializeEventHandlers();
+            FirstRunDirective();
             StartUsbMonitoring();
             LoadSettings();
             LoadArchivePassword();
             LoadAutoStartSetting();
         }
 
+        private void FirstRunDirective()
+        {
+            if (_settings.IsFirstRun)
+            {
+                SourceFolders.Clear();
+
+                _targetDriveId = "";
+                _manualBackupPath = "";
+                AutoBackupFullPath = "";
+                IsAutoBackupEnabled = false;
+
+                _enableCompression = false;
+                _selectedCompressMode = CompressMode.Balanced;
+                _settings.SourceFolders.Clear();
+                _settings.TargetDriveId = "";
+                _settings.TargetDriveLabel = "";
+                _settings.IsFirstRun = false;
+                //_settings.TargetDriveId = "";
+                _settings.TargetFolderPath = "";
+                _settings.TargetDrivePath = "";
+                _settings.EnableAutoBackup = false;
+                _settings.EnableCompression = false;
+                _settings.EnableBackupReminder = false;
+                SaveSettings();
+                RequestShutdown?.Invoke();
+            }
+        }
+        
         private void InitializeEventHandlers()
         {
             _backupManager.LogMessage += OnBackupManagerLogMessage;
@@ -499,12 +528,23 @@ namespace BackupSyncApp.ViewModels
                 if (_settings.LastBackupTime.HasValue) LastBackupTime = _settings.LastBackupTime.Value.ToString("dd.MM.yyyy HH:mm");
 
                 // REMINDER SETTINGS
+                System.Diagnostics.Debug.WriteLine($"[DEBUG] From JSON - EnableBackupReminder: {_settings.EnableBackupReminder}");
+                System.Diagnostics.Debug.WriteLine($"[DEBUG] From JSON - ReminderFrequency: {_settings.ReminderFrequency}");
+                System.Diagnostics.Debug.WriteLine($"[DEBUG] From JSON - ReminderDayOfWeek: {_settings.ReminderDayOfWeek}");
+                System.Diagnostics.Debug.WriteLine($"[DEBUG] From JSON - ReminderDayOfMonth: {_settings.ReminderDayOfMonth}");
+
+
+
                 _enableBackupReminder = _settings.EnableBackupReminder;
                 _selectedReminderFrequency = _settings.ReminderFrequency;
                 
                 _selectedDayOfWeek = _settings.ReminderDayOfWeek ?? DayOfWeek.Monday;
                 _selectedDayOfMonth = _settings.ReminderDayOfMonth ?? 1;
                 _selectedYearlyDate = _settings.ReminderDate;
+
+                System.Diagnostics.Debug.WriteLine($"[DEBUG] After load - _enableBackupReminder: {_enableBackupReminder}");
+                System.Diagnostics.Debug.WriteLine($"[DEBUG] After load - _selectedReminderFrequency: {_selectedReminderFrequency}");
+
 
                 OnPropertyChanged(nameof(EnableBackupReminder));
                 OnPropertyChanged(nameof(SelectedReminderFrequency));
@@ -1126,7 +1166,7 @@ namespace BackupSyncApp.ViewModels
                     AddLog("All settings reset to default", LogMessageType.Success);     
                     _dialogService.ShowMessageBox("Msg_SettingsReseted", "Msg_ResetSettingsTitle", MessageBoxImage.Information);
 
-                    SaveSettings();
+                    //SaveSettings();
 
                     RequestShutdown?.Invoke();
                     

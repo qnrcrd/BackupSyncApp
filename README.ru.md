@@ -1,3 +1,11 @@
+<div align="center">
+
+[🇬🇧 English](README.md) | [🇺 Русский](README.ru.md)
+
+</div>
+
+---
+
 #  BackupSyncApp
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

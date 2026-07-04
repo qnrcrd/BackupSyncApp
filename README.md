@@ -11,6 +11,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![.NET](https://img.shields.io/badge/.NET-10.0-purple)](https://dotnet.microsoft.com/)
 [![Platform](https://img.shields.io/badge/Platform-Windows-blue)](https://www.microsoft.com/windows)
+[![Release](https://img.shields.io/github/v/release/qnrcrd/BackupSyncApp?label=Release)](https://github.com/qnrcrd/BackupSyncApp/releases)
 
 **BackupSyncApp** is a simple desktop application for automated file backup to USB drives. Designed with the *"set it and forget it"* philosophy for non-technical users.
 

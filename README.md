@@ -104,8 +104,8 @@ Archive passwords and source folders paths are encrypted via DPAPI and in the se
 
 ##  System Requirements
 - Windows 10/11 (x64)
-- .NET 10 Runtime (installed automatically with the app)
-- ~30 MB of free disk space
+- .NET 10 Runtime
+- ~30-200 MB of free disk space
 - external drive for backups
 
 ---

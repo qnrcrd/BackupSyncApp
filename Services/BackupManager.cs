@@ -127,15 +127,13 @@ namespace BackupSyncApp.Services
                 errorFiles += result.Errors;
             }
 
-            // === АРХИВАЦИЯ (если включена) ===
+            // === АРХИВАЦИЯ ===
             if (_enableCompression && _archiveService != null)
             {
-                Debug.WriteLine("[DEBUG] Status set to ARCHIVING");
-                StatusChanged?.Invoke("Archiving");
-                
+                StatusChanged?.Invoke("Archiving");          
                 LogMessage?.Invoke("📦 Starting compression...", LogMessageType.Progress);
 
-                // ⚠️ Архив создаётся В РОДИТЕЛЬСКОЙ папке, а не внутри tempFolder!
+                
                 int level = GetCompressionLevelFromMode(_compressMode);
                 LogMessage?.Invoke($"DEBUG: Compression mode = {_compressMode}, Level = {level}/9", LogMessageType.Info);
 
@@ -149,11 +147,10 @@ namespace BackupSyncApp.Services
                     if(archiveResult.IsEncrypted) LogMessage?.Invoke($"🔒 Archive is password protected",LogMessageType.Info);
                     LogMessage?.Invoke($"📊 Compression ratio: {archiveResult.CompressionRatio:F1}% (Original: {FormatSize(archiveResult.OriginalSize)} → Compressed: {FormatSize(archiveResult.CompressedSize)})", LogMessageType.Info);
 
-                    // Удаляем ВРЕМЕННУЮ папку после успешной архивации
+                    // Удаляем временную папку после успешной архивации
                     try
                     {
                         Directory.Delete(tempFolder, true);
-                        //LogMessage?.Invoke("🗑️ Temporary folder removed", LogMessageType.Info);
                     }
                     catch (Exception ex)
                     {
@@ -166,13 +163,8 @@ namespace BackupSyncApp.Services
                     _dialogService.ShowMessageBox("Error_ArchiveFailed", "Msg_ErrorTitle", MessageBoxImage.Error, archiveResult.ErrorMessage);
                 }
             }
-            //else
-            //{
-            //    LogMessage?.Invoke("📂 Files copied without archivation.", LogMessageType.Info);
-            //}
 
             ProgressChanged?.Invoke(100);
-            Debug.WriteLine("[DEBUG] Status set to ready");
             StatusChanged?.Invoke("Ready");
 
             LogMessage?.Invoke("✅ Copying finished.", LogMessageType.Success);
@@ -222,7 +214,6 @@ namespace BackupSyncApp.Services
                     else { result.Skipped++; }
 
                     int progress = totalFiles > 0 ? (int)((double)result.Copied / totalFiles * 100) : 0;
-                    System.Diagnostics.Debug.WriteLine($"[DEBUG] BackupManager: Sending progress {progress}%");
                     ProgressChanged?.Invoke(progress);
                 }
                 catch (Exception ex)

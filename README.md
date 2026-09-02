@@ -31,11 +31,11 @@
 
 ##  Installation
 
-### Via Installer (Recommended)
+### Via Installer
 1. Download the latest version from the [Releases](https://github.com/qnrcrd/BackupSyncApp/releases) section.
 2. Run `BackupSyncApp_Setup_1.1.0.exe`.
 3. Follow the on-screen instructions.
-4. Launch EasyBackup from your Desktop or Start Menu.
+4. Launch BackupSyncApp from your Desktop or Start Menu.
 
 ### From Source Code
 1. run following commands in the console
@@ -55,7 +55,7 @@ cd BackupSyncApp
 1. Add Folders — select the source directories for backup.
 2. Configure external drive — specify the target drive and enable auto-backup.
 3. Done! — plug in your USB or other external target drive, and the backup will start automatically.
-4. 
+ 
 ### Manual Backup
 Switch to "Manual Backup" mode, select the target disk, and click "Start Backup".
 
@@ -99,7 +99,7 @@ EasyBackup/
 ---
 
 ##  Security
-Archive passwords and source folders paths are encrypted via DPAPI and in the settings file, and tied to the Windows local user account. Settings are stored in %localappdata%\EasyBackup\ and are inaccessible to other users.
+Archive passwords are encrypted via DPAPI and in the settings file, and tied to the Windows local user account. Settings are stored in %localappdata%\EasyBackup\ and are inaccessible to other users.
 
 ---
 

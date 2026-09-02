@@ -19,7 +19,7 @@ namespace BackupSyncApp.ViewModels
     /// ViewModel для главного окна приложения.
     /// Содержит всю логику пользовательского интерфейса.
     /// 
-    // ВЕРСИЯ 1.0 ( на самом деле куда больше но я начал нумеровать только сейчас)
+    // ВЕРСИЯ 1.2.1
 
     // ============================================================================
     // ПАМЯТКА: ПОЛЯ ДЛЯ ХРАНЕНИЯ ПУТЕЙ ( ИБО Я ДОДИК )
@@ -528,10 +528,10 @@ namespace BackupSyncApp.ViewModels
                 if (_settings.LastBackupTime.HasValue) LastBackupTime = _settings.LastBackupTime.Value.ToString("dd.MM.yyyy HH:mm");
 
                 // REMINDER SETTINGS
-                System.Diagnostics.Debug.WriteLine($"[DEBUG] From JSON - EnableBackupReminder: {_settings.EnableBackupReminder}");
-                System.Diagnostics.Debug.WriteLine($"[DEBUG] From JSON - ReminderFrequency: {_settings.ReminderFrequency}");
-                System.Diagnostics.Debug.WriteLine($"[DEBUG] From JSON - ReminderDayOfWeek: {_settings.ReminderDayOfWeek}");
-                System.Diagnostics.Debug.WriteLine($"[DEBUG] From JSON - ReminderDayOfMonth: {_settings.ReminderDayOfMonth}");
+                //System.Diagnostics.Debug.WriteLine($"[DEBUG] From JSON - EnableBackupReminder: {_settings.EnableBackupReminder}");
+                //System.Diagnostics.Debug.WriteLine($"[DEBUG] From JSON - ReminderFrequency: {_settings.ReminderFrequency}");
+                //System.Diagnostics.Debug.WriteLine($"[DEBUG] From JSON - ReminderDayOfWeek: {_settings.ReminderDayOfWeek}");
+                //System.Diagnostics.Debug.WriteLine($"[DEBUG] From JSON - ReminderDayOfMonth: {_settings.ReminderDayOfMonth}");
 
 
 
@@ -542,8 +542,8 @@ namespace BackupSyncApp.ViewModels
                 _selectedDayOfMonth = _settings.ReminderDayOfMonth ?? 1;
                 _selectedYearlyDate = _settings.ReminderDate;
 
-                System.Diagnostics.Debug.WriteLine($"[DEBUG] After load - _enableBackupReminder: {_enableBackupReminder}");
-                System.Diagnostics.Debug.WriteLine($"[DEBUG] After load - _selectedReminderFrequency: {_selectedReminderFrequency}");
+                //System.Diagnostics.Debug.WriteLine($"[DEBUG] After load - _enableBackupReminder: {_enableBackupReminder}");
+                //System.Diagnostics.Debug.WriteLine($"[DEBUG] After load - _selectedReminderFrequency: {_selectedReminderFrequency}");
 
 
                 OnPropertyChanged(nameof(EnableBackupReminder));

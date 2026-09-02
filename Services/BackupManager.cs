@@ -205,14 +205,9 @@ namespace BackupSyncApp.Services
 
                 try
                 {
-                    if (ShouldCopyFile(file, destFile))
-                    {
-                        File.Copy(file, destFile, true);
-                        result.Copied++;
-                        LogMessage?.Invoke($"✅ {fileName}", LogMessageType.Success);
-                    }
-                    else { result.Skipped++; }
-
+                    File.Copy(file, destFile, true);
+                    result.Copied++;
+                    LogMessage?.Invoke($"✅ {fileName}", LogMessageType.Success);                 
                     int progress = totalFiles > 0 ? (int)((double)result.Copied / totalFiles * 100) : 0;
                     ProgressChanged?.Invoke(progress);
                 }

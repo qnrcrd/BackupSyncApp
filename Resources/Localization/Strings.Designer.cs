@@ -205,6 +205,69 @@ namespace BackupSyncApp.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Friday.
+        /// </summary>
+        public static string DayOfWeek_Friday {
+            get {
+                return ResourceManager.GetString("DayOfWeek_Friday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monday.
+        /// </summary>
+        public static string DayOfWeek_Monday {
+            get {
+                return ResourceManager.GetString("DayOfWeek_Monday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saturday.
+        /// </summary>
+        public static string DayOfWeek_Saturday {
+            get {
+                return ResourceManager.GetString("DayOfWeek_Saturday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sunday.
+        /// </summary>
+        public static string DayOfWeek_Sunday {
+            get {
+                return ResourceManager.GetString("DayOfWeek_Sunday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thursday.
+        /// </summary>
+        public static string DayOfWeek_Thursday {
+            get {
+                return ResourceManager.GetString("DayOfWeek_Thursday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tuesday.
+        /// </summary>
+        public static string DayOfWeek_Tuesday {
+            get {
+                return ResourceManager.GetString("DayOfWeek_Tuesday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wednesday.
+        /// </summary>
+        public static string DayOfWeek_Wednesday {
+            get {
+                return ResourceManager.GetString("DayOfWeek_Wednesday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose backup target disk.
         /// </summary>
         public static string Dialog_ChooseDisk {

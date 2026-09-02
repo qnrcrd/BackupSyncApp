@@ -20,6 +20,7 @@
         <common:BoolToPasswordStatusConverter x:Key="BoolToPasswordStatusConverter"/>
         <common:ProgressToVisibilityConverter x:Key="ProgressToVisibilityConverter"/>
         <common:ReminderFrequencyToStringConverter x:Key="ReminderFrequencyConverter"/>
+        <common:DayOfWeekToStringConverter x:Key="DayOfWeekConverter"/>
         <!-- status text color converter -->
         <local:StatusColorConverter x:Key="StatusColorConverter"/>
 
@@ -468,7 +469,13 @@
                                                                Width="120"/>
                                             <ComboBox ItemsSource="{Binding DaysOfWeek}"
                                                               SelectedItem="{Binding SelectedDayOfWeek}"
-                                                              Width="150"/>
+                                                              Width="150">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Converter={StaticResource DayOfWeekConverter}}"/>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
                                         </StackPanel>
 
                                         <StackPanel Orientation="Horizontal" Margin="0,0,0,10" 
